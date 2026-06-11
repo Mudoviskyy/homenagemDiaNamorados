@@ -331,8 +331,8 @@
       top: 50%;
       left: 50%;
       width: 94%;
-      max-width: 540px; /* Mais larga no desktop */
-      height: 360px;    /* Mais baixa, criando o molde deitado */
+      max-width: 580px; /* Aumentado de 540px */
+      height: 410px;    /* Aumentado de 360px para dar mais espaço vertical */
       transform: translate(-50%, -50%) scale(1);
       z-index: 100;
       pointer-events: auto;
@@ -343,32 +343,33 @@
     /* Otimização Responsiva para Celulares em modo Retrato */
     @media (max-width: 600px) {
       .envelope-wrapper.reading-mode .letter {
-        height: 310px; /* Adapta a altura no celular para caber na tela mantendo a proporção deitada */
+        height: 355px; /* Aumentado de 310px para mais espaço de leitura */
       }
       .slide-content {
-        font-size: 0.86rem !important;
-        line-height: 1.42 !important;
+        font-size: 0.94rem !important; /* Aumentado para melhor leitura */
+        line-height: 1.48 !important;
+        max-height: 175px !important; /* Limite de conteúdo com scroll se necessário */
       }
       .slide-content p {
         margin-bottom: 6px !important;
       }
       .letter-header h3 {
-        font-size: 1.6rem !important;
+        font-size: 1.7rem !important;
       }
       .slide-signature {
-        font-size: 1.25rem !important;
-        margin-top: 6px !important;
+        font-size: 1.3rem !important;
+        margin-top: 8px !important;
       }
       .proposal-buttons {
-        margin-top: 8px !important;
-        gap: 20px !important;
+        margin-top: 6px !important;
+        gap: 24px !important;
       }
       .heart-btn {
-        width: 60px !important;
-        height: 60px !important;
+        width: 65px !important;
+        height: 65px !important;
       }
       .btn-text {
-        font-size: 0.85rem !important;
+        font-size: 0.9rem !important;
       }
     }
 
@@ -474,10 +475,25 @@
 
     .slide-content {
       font-family: 'Playfair Display', serif;
-      font-size: 0.98rem;
-      line-height: 1.5;
+      font-size: 1.04rem; /* Levemente maior no desktop */
+      line-height: 1.55;
       color: var(--text-dark);
       text-align: justify;
+      overflow-y: auto; /* Permite rolagem fina se o texto transbordar */
+      max-height: 235px; /* Altura limite para o texto no desktop */
+      padding-right: 5px; /* Espaço para a barra de rolagem */
+    }
+
+    /* Estilo elegante para a barra de rolagem do texto */
+    .slide-content::-webkit-scrollbar {
+      width: 4px;
+    }
+    .slide-content::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .slide-content::-webkit-scrollbar-thumb {
+      background: rgba(155, 17, 30, 0.25);
+      border-radius: 2px;
     }
 
     .slide-content p {
