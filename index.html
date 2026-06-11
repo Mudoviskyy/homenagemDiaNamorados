@@ -463,7 +463,8 @@
     }
 
     .slide {
-      width: 12.5%; /* 100 / 8 = 12.5% */
+      flex: 0 0 12.5%; /* Garante que cada folha ocupe exatamente a largura total da carta, sem encolher ou expandir */
+      width: 12.5%;
       height: 100%;
       padding: 0 20px;
       display: flex;
@@ -1332,10 +1333,13 @@
 
     function navigateTo(index) {
       currentIndex = index;
+      container.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      setSliderPositionPercent();
+      updatePageInfo();
+      
+      // Atualiza a posição em pixels para o próximo início de arrasto
       prevTranslate = -currentIndex * slider.offsetWidth;
       currentTranslate = prevTranslate;
-      setSliderPosition();
-      updatePageInfo();
     }
 
     function updatePageInfo() {
@@ -1349,9 +1353,9 @@
     }
 
     function updateSliderWidths() {
+      setSliderPositionPercent();
       prevTranslate = -currentIndex * slider.offsetWidth;
       currentTranslate = prevTranslate;
-      setSliderPosition();
     }
 
     // Manipuladores de Gestos de Arrastar (Toque e Mouse)
@@ -1420,6 +1424,11 @@
 
     function setSliderPosition() {
       container.style.transform = `translateX(${currentTranslate}px)`;
+    }
+
+    function setSliderPositionPercent() {
+      // 100 / 8 = 12.5% para cada slide
+      container.style.transform = `translateX(${-currentIndex * 12.5}%)`;
     }
 
     window.addEventListener('resize', () => {
