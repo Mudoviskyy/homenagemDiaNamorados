@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <!-- Otimizado para dispositivos móveis -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Para Minha Amada Nilceia</title>
-  
+
   <!-- Fontes românticas e elegantes do Google Fonts -->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
@@ -31,7 +32,8 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    body, html {
+    body,
+    html {
       width: 100%;
       height: 100%;
       overflow: hidden;
@@ -43,7 +45,8 @@
     .app-container {
       position: relative;
       width: 100%;
-      height: 100dvh; /* Otimizado para navegadores mobile */
+      height: 100dvh;
+      /* Otimizado para navegadores mobile */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -111,11 +114,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(
-        135deg,
-        rgba(255, 182, 193, 0.4) 0%,
-        rgba(155, 17, 30, 0.5) 100%
-      );
+      background: linear-gradient(135deg,
+          rgba(255, 182, 193, 0.4) 0%,
+          rgba(155, 17, 30, 0.5) 100%);
       backdrop-filter: blur(2px);
       -webkit-backdrop-filter: blur(2px);
       z-index: 2;
@@ -207,7 +208,7 @@
       background: linear-gradient(0deg, var(--ruby-dark) 30%, var(--ruby-light) 100%);
       border-radius: 0 0 6px 6px;
       z-index: 3;
-      box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
     }
 
     /* ABA SUPERIOR (DOBRA DO ENVELOPE) */
@@ -226,7 +227,8 @@
 
     .envelope-wrapper.open .top-flap {
       transform: rotateX(180deg);
-      z-index: 1; /* Vai para trás depois de abrir */
+      z-index: 1;
+      /* Vai para trás depois de abrir */
     }
 
     /* SELO DE CERA */
@@ -244,7 +246,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      box-shadow: 
+      box-shadow:
         0 6px 12px rgba(0, 0, 0, 0.3),
         inset 0 2px 4px rgba(255, 255, 255, 0.4),
         inset 0 -2px 4px rgba(0, 0, 0, 0.5);
@@ -265,7 +267,7 @@
       width: 28px;
       height: 28px;
       fill: var(--gold-color);
-      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
+      filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
       animation: beat-heart 1.2s infinite ease-in-out;
     }
 
@@ -289,7 +291,7 @@
       color: #fff;
       font-family: 'Dancing Script', cursive;
       font-size: 1.6rem;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
       pointer-events: none;
       animation: pulse-text 2s infinite;
       transition: opacity 0.5s ease;
@@ -303,16 +305,19 @@
     /* A CARTA (LETTER CARD) - RETANGULAR DEITADO NO MODO LEITURA */
     .letter {
       position: fixed;
-      bottom: 25px; /* Fixado na parte inferior da tela para deixar o centro livre para as fotos */
+      bottom: 25px;
+      /* Fixado na parte inferior da tela para deixar o centro livre para as fotos */
       left: 50%;
       width: 94%;
-      max-width: 580px; /* Largura no desktop */
-      height: 380px;    /* Altura no desktop */
+      max-width: 580px;
+      /* Largura no desktop */
+      height: 380px;
+      /* Altura no desktop */
       background: radial-gradient(circle, #fffdfa 0%, #faf3e8 100%);
       border: 2px solid #e0c8b0;
       border-radius: 8px;
       padding: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
       z-index: 100;
       opacity: 0;
       /* Começa escondida, centralizada horizontalmente e alinhada verticalmente sobre o envelope */
@@ -341,39 +346,51 @@
     /* Otimização Responsiva para Celulares em modo Retrato */
     @media (max-width: 600px) {
       .letter {
-        height: 325px; /* Um pouco mais baixa no celular para liberar mais espaço superior para as fotos */
+        height: 325px;
+        /* Um pouco mais baixa no celular para liberar mais espaço superior para as fotos */
         transform: translate(-50%, -21vh) scale(0.75);
       }
+
       .letter.emerge {
         transform: translate(-50%, -36vh) scale(1.02);
       }
+
       .reading-mode .letter {
         height: 325px;
         transform: translate(-50%, 0) scale(1);
       }
+
       .slide-content {
-        font-size: 0.94rem !important; /* Aumentado para melhor leitura */
+        font-size: 0.94rem !important;
+        /* Aumentado para melhor leitura */
         line-height: 1.48 !important;
-        max-height: 155px !important; /* Limite de conteúdo com scroll se necessário */
+        max-height: 155px !important;
+        /* Limite de conteúdo com scroll se necessário */
       }
+
       .slide-content p {
         margin-bottom: 6px !important;
       }
+
       .letter-header h3 {
         font-size: 1.7rem !important;
       }
+
       .slide-signature {
         font-size: 1.3rem !important;
         margin-top: 8px !important;
       }
+
       .proposal-buttons {
         margin-top: 6px !important;
         gap: 24px !important;
       }
+
       .heart-btn {
         width: 65px !important;
         height: 65px !important;
       }
+
       .btn-text {
         font-size: 0.9rem !important;
       }
@@ -451,13 +468,15 @@
     .slides-container {
       display: flex;
       height: 100%;
-      width: 800%; /* 8 páginas no total agora */
+      width: 800%;
+      /* 8 páginas no total agora */
       transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       will-change: transform;
     }
 
     .slide {
-      flex: 0 0 12.5%; /* Garante que cada folha ocupe exatamente a largura total da carta, sem encolher ou expandir */
+      flex: 0 0 12.5%;
+      /* Garante que cada folha ocupe exatamente a largura total da carta, sem encolher ou expandir */
       width: 12.5%;
       height: 100%;
       padding: 0 20px;
@@ -465,27 +484,34 @@
       flex-direction: column;
       justify-content: center;
       user-select: none;
-      position: relative; /* Mantém o botão "Não" contido no slide */
+      position: relative;
+      /* Mantém o botão "Não" contido no slide */
     }
 
     .slide-content {
       font-family: 'Playfair Display', serif;
-      font-size: 1.04rem; /* Levemente maior no desktop */
+      font-size: 1.04rem;
+      /* Levemente maior no desktop */
       line-height: 1.55;
       color: var(--text-dark);
       text-align: justify;
-      overflow-y: auto; /* Permite rolagem fina se o texto transbordar */
-      max-height: 235px; /* Altura limite para o texto no desktop */
-      padding-right: 5px; /* Espaço para a barra de rolagem */
+      overflow-y: auto;
+      /* Permite rolagem fina se o texto transbordar */
+      max-height: 235px;
+      /* Altura limite para o texto no desktop */
+      padding-right: 5px;
+      /* Espaço para a barra de rolagem */
     }
 
     /* Estilo elegante para a barra de rolagem do texto */
     .slide-content::-webkit-scrollbar {
       width: 4px;
     }
+
     .slide-content::-webkit-scrollbar-track {
       background: transparent;
     }
+
     .slide-content::-webkit-scrollbar-thumb {
       background: rgba(155, 17, 30, 0.25);
       border-radius: 2px;
@@ -517,7 +543,8 @@
       margin-top: 12px;
       position: relative;
       width: 100%;
-      height: 85px; /* Espaço para o botão fugir */
+      height: 85px;
+      /* Espaço para o botão fugir */
     }
 
     .heart-btn {
@@ -545,7 +572,7 @@
       width: 100%;
       height: 100%;
       z-index: 1;
-      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
     }
 
     .btn-sim svg {
@@ -588,8 +615,15 @@
     }
 
     @keyframes scale-up {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
 
     /* RODAPÉ DA CARTA - INDICADORES E SUPORTE SWIPE */
@@ -679,7 +713,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       backdrop-filter: blur(5px);
       -webkit-backdrop-filter: blur(5px);
       transition: all 0.3s ease;
@@ -716,19 +750,24 @@
       0% {
         box-shadow: 0 0 0 0 rgba(155, 17, 30, 0.4), 0 6px 12px rgba(0, 0, 0, 0.3);
       }
+
       70% {
         box-shadow: 0 0 0 15px rgba(155, 17, 30, 0), 0 6px 12px rgba(0, 0, 0, 0.3);
       }
+
       100% {
         box-shadow: 0 0 0 0 rgba(155, 17, 30, 0), 0 6px 12px rgba(0, 0, 0, 0.3);
       }
     }
 
     @keyframes pulse-text {
-      0%, 100% {
+
+      0%,
+      100% {
         opacity: 0.8;
         transform: translateY(0);
       }
+
       50% {
         opacity: 1;
         transform: translateY(-4px);
@@ -736,43 +775,57 @@
     }
 
     @keyframes beat-heart {
-      0%, 100% {
+
+      0%,
+      100% {
         transform: scale(1);
       }
+
       50% {
         transform: scale(1.18);
       }
     }
 
     @keyframes rotate-music {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
 
     @keyframes sway-hint {
-      0%, 100% {
+
+      0%,
+      100% {
         transform: translateX(0);
       }
+
       25% {
         transform: translateX(-4px);
       }
+
       75% {
         transform: translateX(4px);
       }
     }
   </style>
 </head>
+
 <body>
 
   <!-- Elemento de Áudio Oculto (Loop Garantido) -->
   <audio id="bg-music" loop>
-    <source src="audio/Romântico e poéticoFundo musical romântico para momentos de declaraçãopoesia.mp3" type="audio/mp3">
+    <source src="audio/Romântico e poéticoFundo musical romântico para momentos de declaraçãopoesia.mp3"
+      type="audio/mp3">
   </audio>
 
   <!-- Botão de controle de Música -->
   <button id="music-toggle" class="music-btn" aria-label="Controle de música">
     <svg viewBox="0 0 24 24">
-      <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h6V3h-8z"/>
+      <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h6V3h-8z" />
     </svg>
   </button>
 
@@ -788,7 +841,7 @@
         <div class="bg-slide-crisp"></div>
       </div>
     </div>
-    
+
     <!-- Camada de sobreposição rosa/rubi -->
     <div class="bg-overlay"></div>
 
@@ -801,21 +854,22 @@
     <!-- Envelope -->
     <div class="envelope-wrapper" id="envelope-wrapper">
       <div class="open-instruction">Toque no selo para abrir</div>
-      
+
       <div class="envelope" id="envelope">
         <!-- Parte traseira interna do envelope -->
         <div class="back-flap"></div>
-        
+
         <!-- Abas da frente do envelope -->
         <div class="left-flap"></div>
         <div class="right-flap"></div>
         <div class="bottom-flap"></div>
         <div class="top-flap" id="top-flap"></div>
-        
+
         <!-- Selo de cera com o coração -->
         <div class="wax-seal" id="wax-seal" title="Clique para abrir!">
           <svg viewBox="0 0 24 24">
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            <path
+              d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
           </svg>
         </div>
       </div>
@@ -824,12 +878,15 @@
     <!-- A Carta (independente, como irmã do envelope para evitar conflitos de posicionamento) -->
     <div class="letter" id="letter">
       <div class="letter-frame"></div>
-      
+
       <!-- Cabeçalho com Página -->
       <div class="letter-header">
         <h3 id="letter-title">Minha Querida</h3>
         <div class="page-indicator">
-          <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+          </svg>
           <span>Folha <span id="current-page-num">1</span> de 8</span>
         </div>
       </div>
@@ -837,12 +894,16 @@
       <!-- Slider das Mensagens -->
       <div class="letter-slider" id="letter-slider">
         <div class="slides-container" id="slides-container">
-          
+
           <!-- Página 1 -->
           <div class="slide">
             <div class="slide-content">
-              <p><strong>Pelas dificuldades que passamos e que vamos passar...</strong></p>
-              <p>sei que nosso amor é mais forte do que qualquer tempestade. Cada obstáculo superado nos uniu ainda mais, e tenho a certeza absoluta de que, de mãos dadas, podemos vencer qualquer desafio que o futuro colocar em nosso caminho. Você é minha força diária, a razão do meu sorriso e o meu porto seguro em meio ao caos.</p>
+              <p><strong>Uma breve homenagem para a mulher que amo muito...</strong></p>
+              <p>Que Deus me perdoe por tudo que passei, mas hoje tenho você ao meu lado, e isso é tudo que importa.
+                Você é a mulher da minha vida, o meu lar, o meu para sempre. Eu te amo mais do que palavras podem
+                expressar. Nilceia, minha querida, minha companheira de todas as horas, meu grande amor. Preparei essa
+                carta, simples, mas de coração e usando minhas novas habilidades para te mostrar o quanto você é
+                importante para mim.</p>
             </div>
             <div class="slide-signature">Com todo amor, Ebers</div>
           </div>
@@ -851,7 +912,10 @@
           <div class="slide">
             <div class="slide-content">
               <p><strong>Te conhecer foi algo que mudou minha vida...</strong></p>
-              <p>de uma forma tão linda que até hoje sorrio ao lembrar do início de tudo. De repente, o mundo ganhou mais cor e meu coração encontrou o seu verdadeiro lar. Cada risada, cada conversa e cada momento ao seu lado me fez perceber que a vida é muito mais bonita com você nela. Você trouxe uma paz que eu nunca soube que existia.</p>
+              <p>de uma forma tão linda que até hoje sorrio ao lembrar do início de tudo. De repente, o mundo ganhou
+                mais cor e meu coração encontrou o seu verdadeiro lar. Cada risada, cada conversa e cada momento ao seu
+                lado me fez perceber que a vida é muito mais bonita com você nela. Você trouxe uma paz que eu nunca
+                soube que existia.</p>
             </div>
             <div class="slide-signature">Para sempre seu</div>
           </div>
@@ -860,7 +924,10 @@
           <div class="slide">
             <div class="slide-content">
               <p><strong>Quero construir um futuro próspero junto ao seu lado...</strong></p>
-              <p>onde possamos colher os frutos de toda a nossa cumplicidade e dedicação. Imagino nossa casa cheia de paz, conquistas compartilhadas e a calmaria de um lar verdadeiramente abençoado. Quero planejar cada passo do nosso amanhã sabendo que o meu destino está entrelaçado ao seu, e trabalhar dia após dia para realizar todos os nossos sonhos.</p>
+              <p>onde possamos colher os frutos de toda a nossa cumplicidade e dedicação. Imagino nossa casa cheia de
+                paz, conquistas compartilhadas e a calmaria de um lar verdadeiramente abençoado. Quero planejar cada
+                passo do nosso amanhã sabendo que o meu destino está entrelaçado ao seu, e trabalhar dia após dia para
+                realizar todos os nossos sonhos.</p>
             </div>
             <div class="slide-signature">De mãos dadas</div>
           </div>
@@ -869,7 +936,9 @@
           <div class="slide">
             <div class="slide-content">
               <p><strong>Não se preocupe, nós vamos casar, minha querida...</strong></p>
-              <p>o nosso momento especial está guardado por Deus e vai acontecer exatamente como sonhamos. Esse é o meu compromisso mais sincero com você e com a nossa história. Quero te ver vestida de noiva, olhar nos seus olhos diante do altar e prometer te amar por todos os dias da minha vida. O nosso 'para sempre' está muito perto de começar oficialmente.</p>
+              <p>o nosso momento especial está guardado por Deus e vai acontecer exatamente como sonhamos. Esse é o meu
+                compromisso mais sincero com você e com a nossa história. O nosso 'para sempre' está muito perto de
+                começar oficialmente.</p>
             </div>
             <div class="slide-signature">Meu compromisso eterno</div>
           </div>
@@ -877,8 +946,11 @@
           <!-- Página 5 -->
           <div class="slide">
             <div class="slide-content">
-              <p><strong>Eu te amo, quero ter você ao meu lado pelo resto da vida e não fique pensando bobagens...</strong></p>
-              <p>porque você é a única dona do meu coração. Nenhuma dúvida ou insecurity pode apagar o que sinto por você. Quando digo que é para sempre, é com toda a certeza da minha alma. Deixe de lado os medos e confie no que construímos. Eu sou seu, você é minha, e o nosso amor é eterno, Nilceia.</p>
+              <p><strong>Eu te amo, quero ter você ao meu lado pelo resto da vida e não fique pensando
+                  bobagens...</strong></p>
+              <p>porque você é a única dona do meu coração. Nenhuma dúvida ou insegurança pode apagar o que sinto por
+                você. Quando digo que é para sempre, é com toda a certeza da minha alma. Deixe de lado os medos e confie
+                no que vamos construir. Eu sou seu, você é minha, e o nosso amor é eterno, Nilceia.</p>
             </div>
             <div class="slide-signature">Para todo o sempre</div>
           </div>
@@ -887,7 +959,11 @@
           <div class="slide">
             <div class="slide-content">
               <p><strong>Cada pequeno detalhe em você me faz ter certeza...</strong></p>
-              <p>de que fomos feitos um para o outro. O seu jeito doce de sorrir, a sua voz que me acalma nos dias difíceis, e até as nossas pequenas manias compartilhadas. Você é a minha paz em meio à correria do mundo, e a cada novo amanhecer, eu me pego te amando ainda mais do que no dia anterior. Você me completa por inteiro.</p>
+              <p>de que fomos feitos um para o outro. O seu jeito doce de sorrir, a sua voz que sai alucinada às vezes
+                quando você está eufórica ou preocupada, e até as nossas pequenas manias que você não gosta em mim, acho
+                que de tanto você reclamar no passado hehehe. Você é a minha paz e meu caos em meio à correria do mundo,
+                e a cada novo amanhecer, eu me pego te amando ainda mais do que no dia anterior. Você me completa por
+                inteiro.</p>
             </div>
             <div class="slide-signature">Com todo o meu coração</div>
           </div>
@@ -895,8 +971,10 @@
           <!-- Página 7 (Nova) -->
           <div class="slide">
             <div class="slide-content">
-              <p><strong>A nossa jornada é feita de aprendizado, carinho e crescimento mútuo...</strong></p>
-              <p>Olho para trás e vejo o quanto evoluímos, o quanto nos apoiamos e o quanto o nosso amor amadureceu. Você me inspira a ser um homem melhor a cada dia, e tenho muito orgulho da história de amor e dedicação que estamos escrevendo juntos. O que sinto por você ultrapassa qualquer barreira; é um verdadeiro encontro de almas.</p>
+              <p><strong>Sua personalidade é uma das coisas em que admiro em ti...</strong></p>
+              <p>essa sua determinação, essa sua força, essa sua garra... É contagiante, me inspira e me faz querer ser
+                uma pessoa melhor. Você é forte, guerreira e incansável, e eu sou muito orgulhoso de caminhar ao seu
+                lado.</p>
             </div>
             <div class="slide-signature">Minha parceira de vida</div>
           </div>
@@ -904,19 +982,24 @@
           <!-- Página 8 (Final com o Pedido de Casamento) -->
           <div class="slide" id="slide-final">
             <div class="slide-content">
-              <p>Nilceia, minha querida, minha companheira de todas as horas, meu grande amor... Depois de tudo o que passamos, de tudo o que construímos e de tudo o que ainda sonhamos juntos, há apenas uma pergunta que falta para selar o nosso feliz para sempre:</p>
-              <p style="text-align: center; font-size: 1.15rem; margin-top: 10px;"><strong>Você quer ser carneirinho como eu?</strong></p>
+              <p>Nilceia, minha querida, minha companheira de todas as horas, meu grande amor... Depois de tudo o que
+                passamos, de tudo o que construímos e de tudo o que ainda sonhamos juntos, há apenas uma pergunta que
+                falta para selar o nosso feliz para sempre:</p>
+              <p style="text-align: center; font-size: 1.15rem; margin-top: 10px;"><strong>Você quer ser carneirinho
+                  como eu?</strong></p>
             </div>
             <div class="proposal-buttons">
               <button id="btn-sim" class="heart-btn btn-sim" aria-label="Sim">
                 <svg viewBox="0 0 24 24">
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                  <path
+                    d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                 </svg>
                 <span class="btn-text">Sim</span>
               </button>
               <button id="btn-nao" class="heart-btn btn-nao" aria-label="Não">
                 <svg viewBox="0 0 24 24">
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                  <path
+                    d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                 </svg>
                 <span class="btn-text">Não</span>
               </button>
@@ -932,7 +1015,10 @@
           <!-- Gerado via JavaScript -->
         </div>
         <div class="swipe-hint" id="swipe-hint">
-          <svg viewBox="0 0 24 24"><path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"/></svg>
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z" />
+          </svg>
           <span>Arraste para o lado</span>
         </div>
       </div>
@@ -989,28 +1075,28 @@
       const slideEl = bgSlides[0];
       const blurEl = slideEl.querySelector('.bg-slide-blur');
       const crispEl = slideEl.querySelector('.bg-slide-crisp');
-      
+
       blurEl.style.backgroundImage = `url('${photos[0]}')`;
       crispEl.style.backgroundImage = `url('${photos[0]}')`;
-      
+
       bgSlides[0].classList.add('active');
       currentPhotoIndex = 1;
-      
+
       setInterval(nextBgPhoto, 4800); // Troca a cada 4.8 segundos
     }
 
     function nextBgPhoto() {
       const nextSlideIndex = 1 - activeSlideIndex;
       const nextPhoto = photos[currentPhotoIndex];
-      
+
       const slideEl = bgSlides[nextSlideIndex];
       const blurEl = slideEl.querySelector('.bg-slide-blur');
       const crispEl = slideEl.querySelector('.bg-slide-crisp');
-      
+
       // Carrega a imagem nas duas camadas do próximo slide
       blurEl.style.backgroundImage = `url('${nextPhoto}')`;
       crispEl.style.backgroundImage = `url('${nextPhoto}')`;
-      
+
       // Transiciona a opacidade do slide pai
       setTimeout(() => {
         bgSlides[nextSlideIndex].classList.add('active');
@@ -1046,7 +1132,7 @@
         this.swayWidth = Math.random() * 12 + 4;
         this.swayOffset = Math.random() * Math.PI * 2;
         this.opacity = Math.random() * 0.3 + 0.15;
-        
+
         const colors = [
           '#FFC0CB', // Pink
           '#FFB6C1', // Light Pink
@@ -1064,7 +1150,7 @@
         this.y -= this.speed;
         this.x += Math.sin(this.y * this.swaySpeed + this.swayOffset) * 0.25;
         this.rotation += this.rotationSpeed;
-        
+
         if (this.y < -this.size * 2) {
           this.reset(false);
         }
@@ -1075,12 +1161,12 @@
         bgCtx.globalAlpha = this.opacity;
         bgCtx.translate(this.x, this.y);
         bgCtx.rotate(this.rotation);
-        
+
         bgCtx.beginPath();
         bgCtx.moveTo(0, -this.size / 2);
         bgCtx.bezierCurveTo(-this.size / 2, -this.size, -this.size, -this.size / 3, 0, this.size);
         bgCtx.bezierCurveTo(this.size, -this.size / 3, this.size / 2, -this.size, 0, -this.size / 2);
-        
+
         bgCtx.fillStyle = this.color;
         bgCtx.fill();
         bgCtx.restore();
@@ -1127,7 +1213,7 @@
         this.decay = Math.random() * 0.014 + 0.008;
         this.gravity = 0.1;
         this.drag = 0.965;
-        
+
         const colors = [
           '#FF1493', // Deep Pink
           '#FF69B4', // Hot Pink
@@ -1156,15 +1242,15 @@
         fwCtx.globalAlpha = this.alpha;
         fwCtx.translate(this.x, this.y);
         fwCtx.rotate(this.rotation);
-        
+
         fwCtx.beginPath();
         fwCtx.moveTo(0, -this.size / 2);
         fwCtx.bezierCurveTo(-this.size / 2, -this.size, -this.size, -this.size / 3, 0, this.size);
         fwCtx.bezierCurveTo(this.size, -this.size / 3, this.size / 2, -this.size, 0, -this.size / 2);
-        
+
         fwCtx.shadowBlur = 8;
         fwCtx.shadowColor = this.color;
-        
+
         fwCtx.fillStyle = this.color;
         fwCtx.fill();
         fwCtx.restore();
@@ -1183,7 +1269,7 @@
     function animateFireworks() {
       if (!isFwActive) return;
       fwCtx.clearRect(0, 0, fwCanvas.width, fwCanvas.height);
-      
+
       let hasAliveParticles = false;
       for (let i = fwParticles.length - 1; i >= 0; i--) {
         const p = fwParticles[i];
@@ -1195,7 +1281,7 @@
           fwParticles.splice(i, 1);
         }
       }
-      
+
       if (hasAliveParticles) {
         requestAnimationFrame(animateFireworks);
       } else {
@@ -1247,7 +1333,7 @@
       const rect = waxSeal.getBoundingClientRect();
       const clickX = rect.left + rect.width / 2;
       const clickY = rect.top + rect.height / 2;
-      
+
       setTimeout(() => {
         explodeFireworks(clickX, clickY);
       }, 150);
@@ -1269,7 +1355,7 @@
     const dotsContainer = document.getElementById('dots-container');
     const swipeHint = document.getElementById('swipe-hint');
     const letterTitle = document.getElementById('letter-title');
-    
+
     let currentIndex = 0;
     const totalSlides = 8; // Aumentado para 8
     let isDragging = false;
@@ -1328,7 +1414,7 @@
       container.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
       setSliderPositionPercent();
       updatePageInfo();
-      
+
       // Atualiza a posição em pixels para o próximo início de arrasto
       prevTranslate = -currentIndex * slider.offsetWidth;
       currentTranslate = prevTranslate;
@@ -1368,7 +1454,7 @@
       // Se clicar nos botões do pedido final, não arrasta
       if (event.target.closest('.heart-btn')) return;
       if (event.type.includes('mouse') && event.target.tagName !== 'BUTTON') event.preventDefault();
-      
+
       isDragging = true;
       startX = getPositionX(event);
       container.style.transition = 'none';
@@ -1379,13 +1465,13 @@
       if (!isDragging) return;
       const currentX = getPositionX(event);
       const diffX = currentX - startX;
-      
+
       currentTranslate = prevTranslate + diffX;
-      
+
       // Efeito elástico nas pontas do slider
       const minBound = 0;
       const maxBound = -(totalSlides - 1) * slider.offsetWidth;
-      
+
       if (currentTranslate > minBound) {
         currentTranslate = diffX * 0.25;
       } else if (currentTranslate < maxBound) {
@@ -1399,9 +1485,9 @@
     function touchEnd() {
       if (!isDragging) return;
       isDragging = false;
-      
+
       container.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-      
+
       const movedBy = currentTranslate - prevTranslate;
       const threshold = slider.offsetWidth * 0.16;
 
@@ -1434,7 +1520,7 @@
 
     btnSim.addEventListener('click', (e) => {
       e.stopPropagation();
-      
+
       // Substitui o conteúdo da folha final pela confirmação emocionante
       slideFinal.innerHTML = `
         <div class="success-message">
@@ -1442,7 +1528,7 @@
           <p>Eu te amo mais do que tudo, minha carneirinha! Nosso destino está selado para sempre. Mal posso esperar para passar o resto dos meus dias cuidando de você, te fazendo sorrir e construindo nossa linda família. Você é o meu maior tesouro!</p>
         </div>
       `;
-      
+
       // Impede arrastar o slide após responder para ficar fixado na confirmação
       slider.style.pointerEvents = 'none';
 
@@ -1461,24 +1547,24 @@
     // LÓGICA DO BOTÃO "NÃO" QUE ESCAPA DO CLIQUE/TOQUE
     function moverBotaoNao(e) {
       if (e) e.stopPropagation();
-      
+
       const slide = btnNao.closest('.slide');
       const slideWidth = slide.clientWidth;
       const slideHeight = slide.clientHeight;
-      
+
       // Dimensões do botão (70px x 70px) + margem de segurança
       const btnSize = 75;
-      
+
       // Limites horizontais e verticais relativos ao slide
       const minX = 15;
       const maxX = slideWidth - btnSize - 15;
       const minY = 90; // Começa abaixo do texto da pergunta
       const maxY = slideHeight - btnSize - 10;
-      
+
       // Calcula coordenadas aleatórias dentro dos limites
       const randomX = Math.random() * (maxX - minX) + minX;
       const randomY = Math.random() * (maxY - minY) + minY;
-      
+
       btnNao.style.position = 'absolute';
       btnNao.style.left = `${randomX}px`;
       btnNao.style.top = `${randomY}px`;
@@ -1504,4 +1590,5 @@
     });
   </script>
 </body>
+
 </html>
