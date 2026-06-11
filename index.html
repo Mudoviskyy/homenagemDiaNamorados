@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <!-- Otimizado para dispositivos móveis -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Para Minha Amada Nilceia</title>
+  
+  <!-- Fontes românticas e elegantes do Google Fonts -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+  </style>
+
+  <style>
+    :root {
+      --ruby-color: #9B111E;
+      --ruby-light: #C71F31;
+      --ruby-dark: #6E0B14;
+      --pink-soft: #FFB7C5;
+      --pink-bg: #FFF0F2;
+      --gold-color: #E5C158;
+      --gold-light: #F3DC7C;
+      --text-dark: #4A3235;
+      --text-muted: #8C6A6E;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Montserrat', sans-serif;
+      background-color: #ffeef2;
+    }
+
+    /* CONTAINER PRINCIPAL */
+    .app-container {
+      position: relative;
+      width: 100%;
+      height: 100dvh; /* Otimizado para navegadores mobile */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px;
+    }
+
+    /* CARROSSEL DE FOTOS EM SEGUNDO PLANO (BLUR + CRISP) */
+    .bg-carousel {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .bg-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transition: opacity 1.8s ease-in-out;
+      opacity: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .bg-slide.active {
+      opacity: 1;
+    }
+
+    /* Camada desfocada esticada no fundo */
+    .bg-slide-blur {
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      right: -20px;
+      bottom: -20px;
+      background-size: cover;
+      background-position: center;
+      filter: blur(20px);
+      opacity: 0.55;
+      z-index: 1;
+    }
+
+    /* Foto nítida e enquadrada por inteiro no centro */
+    .bg-slide-crisp {
+      position: relative;
+      width: 90%;
+      height: 90%;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      z-index: 2;
+      filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.35));
+    }
+
+    /* CAMADA DE SOBREPOSIÇÃO ROSA/RUBI COM DESFOQUE */
+    .bg-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 182, 193, 0.4) 0%,
+        rgba(155, 17, 30, 0.5) 100%
+      );
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      z-index: 2;
+    }
+
+    /* CANVASES DE ANIMAÇÃO */
+    #hearts-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    #fireworks-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 99;
+      pointer-events: none;
+    }
+
+    /* ENVELOPE CONTAINER (LEVEMENTE MAIOR) */
+    .envelope-wrapper {
+      position: relative;
+      width: 360px;
+      height: 240px;
+      z-index: 10;
+      transition: transform 0.8s ease, opacity 0.8s ease;
+    }
+
+    .envelope-wrapper.reading-mode {
+      pointer-events: none;
+    }
+
+    .envelope {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: var(--ruby-dark);
+      border-radius: 6px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      transform-style: preserve-3d;
+    }
+
+    /* ABA DE TRÁS DO ENVELOPE (FUNDO INTERNO) */
+    .back-flap {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, var(--ruby-light) 0%, var(--ruby-dark) 100%);
+      border-radius: 6px;
+      z-index: 1;
+    }
+
+    /* ABAS LATERAIS E INFERIOR (FRENTE DO ENVELOPE) */
+    .left-flap {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      clip-path: polygon(0% 0%, 50% 50%, 0% 100%);
+      background: linear-gradient(35deg, var(--ruby-dark) 40%, var(--ruby-light) 100%);
+      border-radius: 6px 0 0 6px;
+      z-index: 3;
+    }
+
+    .right-flap {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      clip-path: polygon(100% 0%, 50% 50%, 100% 100%);
+      background: linear-gradient(-35deg, var(--ruby-dark) 40%, var(--ruby-light) 100%);
+      border-radius: 0 6px 6px 0;
+      z-index: 3;
+    }
+
+    .bottom-flap {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      clip-path: polygon(0% 100%, 50% 45%, 100% 100%);
+      background: linear-gradient(0deg, var(--ruby-dark) 30%, var(--ruby-light) 100%);
+      border-radius: 0 0 6px 6px;
+      z-index: 3;
+      box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+    }
+
+    /* ABA SUPERIOR (DOBRA DO ENVELOPE) */
+    .top-flap {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      clip-path: polygon(0% 0%, 100% 0%, 50% 55%);
+      background: linear-gradient(180deg, var(--ruby-color) 40%, var(--ruby-light) 100%);
+      border-radius: 6px 6px 0 0;
+      z-index: 4;
+      transform-origin: top;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.3s;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .envelope-wrapper.open .top-flap {
+      transform: rotateX(180deg);
+      z-index: 1; /* Vai para trás depois de abrir */
+    }
+
+    /* SELO DE CERA */
+    .wax-seal {
+      position: absolute;
+      left: 50%;
+      top: 55%;
+      transform: translate(-50%, -50%);
+      width: 65px;
+      height: 65px;
+      background: radial-gradient(circle at 35% 35%, #e62e3d 0%, var(--ruby-dark) 90%);
+      border-radius: 50%;
+      z-index: 5;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 
+        0 6px 12px rgba(0, 0, 0, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.4),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease;
+      animation: pulse-seal 2s infinite;
+    }
+
+    .wax-seal::after {
+      content: '';
+      position: absolute;
+      width: 80%;
+      height: 80%;
+      border: 1.5px dashed rgba(229, 193, 88, 0.5);
+      border-radius: 50%;
+    }
+
+    .wax-seal svg {
+      width: 28px;
+      height: 28px;
+      fill: var(--gold-color);
+      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
+      animation: beat-heart 1.2s infinite ease-in-out;
+    }
+
+    .wax-seal:hover {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .envelope-wrapper.open .wax-seal {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0);
+      pointer-events: none;
+    }
+
+    /* TEXTO DE ORIENTAÇÃO PARA ABRIR */
+    .open-instruction {
+      position: absolute;
+      top: -45px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      color: #fff;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      pointer-events: none;
+      animation: pulse-text 2s infinite;
+      transition: opacity 0.5s ease;
+      z-index: 5;
+    }
+
+    .envelope-wrapper.open .open-instruction {
+      opacity: 0;
+    }
+
+    /* A CARTA (LETTER CARD) - RETANGULAR DEITADO NO MODO LEITURA */
+    .letter {
+      position: absolute;
+      top: 0;
+      left: 10px;
+      width: 340px;
+      height: 220px;
+      background: radial-gradient(circle, #fffdfa 0%, #faf3e8 100%);
+      border: 2px solid #e0c8b0;
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      z-index: 2;
+      opacity: 0;
+      transform: translateY(10px) scale(0.9);
+      pointer-events: none;
+      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s, width 0.8s, height 0.8s, left 0.8s, top 0.8s;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Quando emerge do envelope */
+    .envelope-wrapper.open .letter.emerge {
+      opacity: 1;
+      transform: translateY(-145px) scale(1.02);
+    }
+
+    /* MODO LEITURA TELA CHEIA - RETANGULAR DEITADO (PAISAGEM) */
+    .envelope-wrapper.reading-mode .letter {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 94%;
+      max-width: 540px; /* Mais larga no desktop */
+      height: 360px;    /* Mais baixa, criando o molde deitado */
+      transform: translate(-50%, -50%) scale(1);
+      z-index: 100;
+      pointer-events: auto;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+      border: 2.5px solid var(--ruby-color);
+    }
+
+    /* Otimização Responsiva para Celulares em modo Retrato */
+    @media (max-width: 600px) {
+      .envelope-wrapper.reading-mode .letter {
+        height: 310px; /* Adapta a altura no celular para caber na tela mantendo a proporção deitada */
+      }
+      .slide-content {
+        font-size: 0.86rem !important;
+        line-height: 1.42 !important;
+      }
+      .slide-content p {
+        margin-bottom: 6px !important;
+      }
+      .letter-header h3 {
+        font-size: 1.6rem !important;
+      }
+      .slide-signature {
+        font-size: 1.25rem !important;
+        margin-top: 6px !important;
+      }
+      .proposal-buttons {
+        margin-top: 8px !important;
+        gap: 20px !important;
+      }
+      .heart-btn {
+        width: 60px !important;
+        height: 60px !important;
+      }
+      .btn-text {
+        font-size: 0.85rem !important;
+      }
+    }
+
+    /* Esmaecer o envelope original no modo de leitura */
+    .envelope-wrapper.reading-mode .back-flap,
+    .envelope-wrapper.reading-mode .left-flap,
+    .envelope-wrapper.reading-mode .right-flap,
+    .envelope-wrapper.reading-mode .bottom-flap,
+    .envelope-wrapper.reading-mode .top-flap {
+      opacity: 0 !important;
+      transform: translateY(120px) scale(0.8);
+      pointer-events: none;
+      transition: opacity 0.8s, transform 0.8s;
+    }
+
+    /* MOLDURA E BORDAS INTERNAS DA CARTA */
+    .letter-frame {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      right: 6px;
+      bottom: 6px;
+      border: 1px solid rgba(155, 17, 30, 0.12);
+      pointer-events: none;
+      border-radius: 4px;
+    }
+
+    .letter-frame::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      right: 3px;
+      bottom: 3px;
+      border: 1.5px solid rgba(155, 17, 30, 0.2);
+      border-radius: 2px;
+    }
+
+    /* ESTRUTURA DOS SLIDES DENTRO DA CARTA */
+    .letter-header {
+      width: 100%;
+      text-align: center;
+      padding-top: 5px;
+      z-index: 10;
+    }
+
+    .letter-header h3 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.9rem;
+      color: var(--ruby-color);
+      margin-bottom: 1px;
+    }
+
+    .letter-header .page-indicator {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .letter-header .page-indicator svg {
+      width: 9px;
+      height: 9px;
+      fill: var(--ruby-color);
+    }
+
+    .letter-slider {
+      flex: 1;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      margin: 5px 0;
+      cursor: grab;
+    }
+
+    .letter-slider:active {
+      cursor: grabbing;
+    }
+
+    .slides-container {
+      display: flex;
+      height: 100%;
+      width: 800%; /* 8 páginas no total agora */
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform;
+    }
+
+    .slide {
+      width: 12.5%; /* 100 / 8 = 12.5% */
+      height: 100%;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      user-select: none;
+      position: relative; /* Mantém o botão "Não" contido no slide */
+    }
+
+    .slide-content {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.98rem;
+      line-height: 1.5;
+      color: var(--text-dark);
+      text-align: justify;
+    }
+
+    .slide-content p {
+      margin-bottom: 8px;
+    }
+
+    .slide-content strong {
+      color: var(--ruby-color);
+      font-weight: 700;
+    }
+
+    .slide-signature {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.35rem;
+      text-align: right;
+      color: var(--ruby-color);
+      margin-top: 10px;
+    }
+
+    /* ELEMENTOS ESPECÍFICOS DO PEDIDO DE CASAMENTO */
+    .proposal-buttons {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 12px;
+      position: relative;
+      width: 100%;
+      height: 85px; /* Espaço para o botão fugir */
+    }
+
+    .heart-btn {
+      position: relative;
+      width: 70px;
+      height: 70px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      outline: none;
+    }
+
+    .heart-btn:hover {
+      transform: scale(1.15);
+    }
+
+    .heart-btn svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+    }
+
+    .btn-sim svg {
+      fill: var(--ruby-color);
+    }
+
+    .btn-nao svg {
+      fill: #7c686a;
+      transition: fill 0.3s;
+    }
+
+    .btn-text {
+      position: relative;
+      z-index: 2;
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      pointer-events: none;
+    }
+
+    /* Tela de Sucesso */
+    .success-message {
+      text-align: center;
+      animation: scale-up 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    .success-message h2 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.3rem;
+      color: var(--ruby-color);
+      margin-bottom: 6px;
+    }
+
+    .success-message p {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.98rem;
+      line-height: 1.5;
+      color: var(--text-dark);
+    }
+
+    @keyframes scale-up {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* RODAPÉ DA CARTA - INDICADORES E SUPORTE SWIPE */
+    .letter-footer {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding-bottom: 5px;
+      z-index: 10;
+    }
+
+    .dots-container {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: rgba(155, 17, 30, 0.2);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background-color: var(--ruby-color);
+      transform: scale(1.25);
+    }
+
+    .dot.active-heart {
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 12px;
+      height: 12px;
+    }
+
+    .dot.active-heart svg {
+      width: 12px;
+      height: 12px;
+      fill: var(--ruby-color);
+      animation: beat-heart 1s infinite ease-in-out;
+    }
+
+    /* DICA DE SWIPE (ARRASTAR) */
+    .swipe-hint {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+      animation: sway-hint 2s infinite ease-in-out;
+    }
+
+    .swipe-hint svg {
+      width: 12px;
+      height: 12px;
+      fill: var(--text-muted);
+    }
+
+    .swipe-hint.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* BOTÃO DE REPRODUÇÃO DE MÚSICA */
+    .music-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.85);
+      border: 1.5px solid var(--pink-soft);
+      z-index: 200;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: scale(0.5);
+      pointer-events: none;
+    }
+
+    .music-btn.visible {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    .music-btn:hover {
+      background-color: #fff;
+      transform: scale(1.08);
+      border-color: var(--ruby-color);
+    }
+
+    .music-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: var(--ruby-color);
+      transition: transform 0.3s;
+    }
+
+    .music-btn.playing svg {
+      animation: rotate-music 4s linear infinite;
+    }
+
+    /* ANIMAÇÕES */
+    @keyframes pulse-seal {
+      0% {
+        box-shadow: 0 0 0 0 rgba(155, 17, 30, 0.4), 0 6px 12px rgba(0, 0, 0, 0.3);
+      }
+      70% {
+        box-shadow: 0 0 0 15px rgba(155, 17, 30, 0), 0 6px 12px rgba(0, 0, 0, 0.3);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(155, 17, 30, 0), 0 6px 12px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    @keyframes pulse-text {
+      0%, 100% {
+        opacity: 0.8;
+        transform: translateY(0);
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(-4px);
+      }
+    }
+
+    @keyframes beat-heart {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.18);
+      }
+    }
+
+    @keyframes rotate-music {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes sway-hint {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      25% {
+        transform: translateX(-4px);
+      }
+      75% {
+        transform: translateX(4px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Elemento de Áudio Oculto (Loop Garantido) -->
+  <audio id="bg-music" loop>
+    <source src="audio/Romântico e poéticoFundo musical romântico para momentos de declaraçãopoesia.mp3" type="audio/mp3">
+  </audio>
+
+  <!-- Botão de controle de Música -->
+  <button id="music-toggle" class="music-btn" aria-label="Controle de música">
+    <svg viewBox="0 0 24 24">
+      <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h6V3h-8z"/>
+    </svg>
+  </button>
+
+  <div class="app-container">
+    <!-- Imagens do carrossel (segundo plano com blur e nítido) -->
+    <div class="bg-carousel">
+      <div id="bg-slide-1" class="bg-slide">
+        <div class="bg-slide-blur"></div>
+        <div class="bg-slide-crisp"></div>
+      </div>
+      <div id="bg-slide-2" class="bg-slide">
+        <div class="bg-slide-blur"></div>
+        <div class="bg-slide-crisp"></div>
+      </div>
+    </div>
+    
+    <!-- Camada de sobreposição rosa/rubi -->
+    <div class="bg-overlay"></div>
+
+    <!-- Canvas para Corações Flutuantes (Background) -->
+    <canvas id="hearts-canvas"></canvas>
+
+    <!-- Canvas para Fogos de Artifício (Foreground) -->
+    <canvas id="fireworks-canvas"></canvas>
+
+    <!-- Envelope e Carta -->
+    <div class="envelope-wrapper" id="envelope-wrapper">
+      <div class="open-instruction">Toque no selo para abrir</div>
+      
+      <div class="envelope" id="envelope">
+        <!-- Parte traseira interna do envelope -->
+        <div class="back-flap"></div>
+        
+        <!-- A Carta que sai de dentro (Formato Retangular Deitado no Leitura) -->
+        <div class="letter" id="letter">
+          <div class="letter-frame"></div>
+          
+          <!-- Cabeçalho com Página -->
+          <div class="letter-header">
+            <h3 id="letter-title">Minha Querida</h3>
+            <div class="page-indicator">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <span>Folha <span id="current-page-num">1</span> de 8</span>
+            </div>
+          </div>
+
+          <!-- Slider das Mensagens -->
+          <div class="letter-slider" id="letter-slider">
+            <div class="slides-container" id="slides-container">
+              
+              <!-- Página 1 -->
+              <div class="slide">
+                <div class="slide-content">
+                  <p><strong>Pelas dificuldades que passamos e que vamos passar...</strong></p>
+                  <p>sei que nosso amor é mais forte do que qualquer tempestade. Cada obstáculo superado nos uniu ainda mais, e tenho a certeza absoluta de que, de mãos dadas, podemos vencer qualquer desafio que o futuro colocar em nosso caminho. Você é minha força diária, a razão do meu sorriso e o meu porto seguro em meio ao caos.</p>
+                </div>
+                <div class="slide-signature">Com todo amor, Ebers</div>
+              </div>
+
+              <!-- Página 2 -->
+              <div class="slide">
+                <div class="slide-content">
+                  <p><strong>Te conhecer foi algo que mudou minha vida...</strong></p>
+                  <p>de uma forma tão linda que até hoje sorrio ao lembrar do início de tudo. De repente, o mundo ganhou mais cor e meu coração encontrou o seu verdadeiro lar. Cada risada, cada conversa e cada momento ao seu lado me fez perceber que a vida é muito mais bonita com você nela. Você trouxe uma paz que eu nunca soube que existia.</p>
+                </div>
+                <div class="slide-signature">Para sempre seu</div>
+              </div>
+
+              <!-- Página 3 -->
+              <div class="slide">
+                <div class="slide-content">
+                  <p><strong>Quero construir um futuro próspero junto ao seu lado...</strong></p>
+                  <p>onde possamos colher os frutos de toda a nossa cumplicidade e dedicação. Imagino nossa casa cheia de paz, conquistas compartilhadas e a calmaria de um lar verdadeiramente abençoado. Quero planejar cada passo do nosso amanhã sabendo que o meu destino está entrelaçado ao seu, e trabalhar dia após dia para realizar todos os nossos sonhos.</p>
+                </div>
+                <div class="slide-signature">De mãos dadas</div>
+              </div>
+
+              <!-- Página 4 -->
+              <div class="slide">
+                <div class="slide-content">
+                  <p><strong>Não se preocupe, nós vamos casar, minha querida...</strong></p>
+                  <p>o nosso momento especial está guardado por Deus e vai acontecer exatamente como sonhamos. Esse é o meu compromisso mais sincero com você e com a nossa história. Quero te ver vestida de noiva, olhar nos seus olhos diante do altar e prometer te amar por todos os dias da minha vida. O nosso 'para sempre' está muito perto de começar oficialmente.</p>
+                </div>
+                <div class="slide-signature">Meu compromisso eterno</div>
+              </div>
+
+              <!-- Página 5 -->
+              <div class="slide">
+                <div class="slide-content">
+                  <p><strong>Eu te amo, quero ter você ao meu lado pelo resto da vida e não fique pensando bobagens...</strong></p>
+                  <p>porque você é a única dona do meu coração. Nenhuma dúvida ou insegurança pode apagar o que sinto por você. Quando digo que é para sempre, é com toda a certeza da minha alma. Deixe de lado os medos e confie no que construímos. Eu sou seu, você é minha, e o nosso amor é eterno, Nilceia.</p>
+                </div>
+                <div class="slide-signature">Para todo o sempre</div>
+              </div>
+
+              <!-- Página 6 (Nova) -->
+              <div class="slide">
+                <div class="slide-content">
+                  <p><strong>Cada pequeno detalhe em você me faz ter certeza...</strong></p>
+                  <p>de que fomos feitos um para o outro. O seu jeito doce de sorrir, a sua voz que me acalma nos dias difíceis, e até as nossas pequenas manias compartilhadas. Você é a minha paz em meio à correria do mundo, e a cada novo amanhecer, eu me pego te amando ainda mais do que no dia anterior. Você me completa por inteiro.</p>
+                </div>
+                <div class="slide-signature">Com todo o meu coração</div>
+              </div>
+
+              <!-- Página 7 (Nova) -->
+              <div class="slide">
+                <div class="slide-content">
+                  <p><strong>A nossa jornada é feita de aprendizado, carinho e crescimento mútuo...</strong></p>
+                  <p>Olho para trás e vejo o quanto evoluímos, o quanto nos apoiamos e o quanto o nosso amor amadureceu. Você me inspira a ser um homem melhor a cada dia, e tenho muito orgulho da história de amor e dedicação que estamos escrevendo juntos. O que sinto por você ultrapassa qualquer barreira; é um verdadeiro encontro de almas.</p>
+                </div>
+                <div class="slide-signature">Minha parceira de vida</div>
+              </div>
+
+              <!-- Página 8 (Final com o Pedido de Casamento) -->
+              <div class="slide" id="slide-final">
+                <div class="slide-content">
+                  <p>Nilceia, minha querida, minha companheira de todas as horas, meu grande amor... Depois de tudo o que passamos, de tudo o que construímos e de tudo o que ainda sonhamos juntos, há apenas uma pergunta que falta para selar o nosso feliz para sempre:</p>
+                  <p style="text-align: center; font-size: 1.15rem; margin-top: 10px;"><strong>Você quer ser carneirinho como eu?</strong></p>
+                </div>
+                <div class="proposal-buttons">
+                  <button id="btn-sim" class="heart-btn btn-sim" aria-label="Sim">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                    <span class="btn-text">Sim</span>
+                  </button>
+                  <button id="btn-nao" class="heart-btn btn-nao" aria-label="Não">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                    <span class="btn-text">Não</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Rodapé com bolinhas e dica de arrastar -->
+          <div class="letter-footer">
+            <div class="dots-container" id="dots-container">
+              <!-- Gerado via JavaScript -->
+            </div>
+            <div class="swipe-hint" id="swipe-hint">
+              <svg viewBox="0 0 24 24"><path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"/></svg>
+              <span>Arraste para o lado</span>
+            </div>
+          </div>
+
+        </div> <!-- Fim Letter -->
+
+        <!-- Abas da frente do envelope -->
+        <div class="left-flap"></div>
+        <div class="right-flap"></div>
+        <div class="bottom-flap"></div>
+        <div class="top-flap" id="top-flap"></div>
+        
+        <!-- Selo de cera com o coração -->
+        <div class="wax-seal" id="wax-seal" title="Clique para abrir!">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Script Principal com lógicas de toque, carrossel e partículas -->
+  <script>
+    // LISTA DE FOTOS DISPONÍVEIS
+    const photos = [
+      "fotos/20220123_203442.jpg",
+      "fotos/20220211_205820.jpg",
+      "fotos/20220211_215856.jpg",
+      "fotos/20220305_082551.jpg",
+      "fotos/20220325_214150.jpg",
+      "fotos/20220508_152818.jpg",
+      "fotos/20220907_205403.jpg",
+      "fotos/20220918_205154.jpg",
+      "fotos/20221211_181951.jpg",
+      "fotos/20221228_190228.jpg",
+      "fotos/20230112_211432.jpg",
+      "fotos/20230204_170939.jpg",
+      "fotos/20230303_095610.jpg",
+      "fotos/20230401_192202_01.jpg",
+      "fotos/20230401_192202_02.jpg",
+      "fotos/20230625_183013.jpg",
+      "fotos/20230805_195737.jpg",
+      "fotos/20230806_014905.jpg",
+      "fotos/20241224_145145.jpg",
+      "fotos/IMG_20220227_133933_816.jpg",
+      "fotos/IMG_20230612_122554_070.jpg"
+    ];
+
+    // EMBARALHAR FOTOS NO INÍCIO
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+    shuffleArray(photos);
+
+    // CARROSSEL DE FOTOS EM SEGUNDO PLANO (BLUR + CRISP)
+    let currentPhotoIndex = 0;
+    const bgSlides = [
+      document.getElementById('bg-slide-1'),
+      document.getElementById('bg-slide-2')
+    ];
+    let activeSlideIndex = 0;
+
+    function initBgSlideshow() {
+      // Inicia o slide ativo com a primeira foto
+      const slideEl = bgSlides[0];
+      const blurEl = slideEl.querySelector('.bg-slide-blur');
+      const crispEl = slideEl.querySelector('.bg-slide-crisp');
+      
+      blurEl.style.backgroundImage = `url('${photos[0]}')`;
+      crispEl.style.backgroundImage = `url('${photos[0]}')`;
+      
+      bgSlides[0].classList.add('active');
+      currentPhotoIndex = 1;
+      
+      setInterval(nextBgPhoto, 4800); // Troca a cada 4.8 segundos
+    }
+
+    function nextBgPhoto() {
+      const nextSlideIndex = 1 - activeSlideIndex;
+      const nextPhoto = photos[currentPhotoIndex];
+      
+      const slideEl = bgSlides[nextSlideIndex];
+      const blurEl = slideEl.querySelector('.bg-slide-blur');
+      const crispEl = slideEl.querySelector('.bg-slide-crisp');
+      
+      // Carrega a imagem nas duas camadas do próximo slide
+      blurEl.style.backgroundImage = `url('${nextPhoto}')`;
+      crispEl.style.backgroundImage = `url('${nextPhoto}')`;
+      
+      // Transiciona a opacidade do slide pai
+      setTimeout(() => {
+        bgSlides[nextSlideIndex].classList.add('active');
+        bgSlides[activeSlideIndex].classList.remove('active');
+        activeSlideIndex = nextSlideIndex;
+        currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
+      }, 60);
+    }
+
+    // CANVAS 1: CORAÇÕES FLUTUANTES (BACKGROUND)
+    const bgCanvas = document.getElementById('hearts-canvas');
+    const bgCtx = bgCanvas.getContext('2d');
+    let bgParticles = [];
+
+    function resizeBgCanvas() {
+      bgCanvas.width = window.innerWidth;
+      bgCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeBgCanvas);
+    resizeBgCanvas();
+
+    class BgHeart {
+      constructor() {
+        this.reset(true);
+      }
+
+      reset(initial = false) {
+        this.size = Math.random() * 14 + 8;
+        this.x = Math.random() * bgCanvas.width;
+        this.y = initial ? Math.random() * bgCanvas.height : bgCanvas.height + this.size * 2;
+        this.speed = Math.random() * 0.75 + 0.35;
+        this.swaySpeed = Math.random() * 0.015 + 0.005;
+        this.swayWidth = Math.random() * 12 + 4;
+        this.swayOffset = Math.random() * Math.PI * 2;
+        this.opacity = Math.random() * 0.3 + 0.15;
+        
+        const colors = [
+          '#FFC0CB', // Pink
+          '#FFB6C1', // Light Pink
+          '#FF69B4', // Hot Pink
+          '#FF1493', // Deep Pink
+          '#DB7093', // Pale Violet Red
+          '#FFF0F5'  // Lavender Blush
+        ];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.015;
+      }
+
+      update() {
+        this.y -= this.speed;
+        this.x += Math.sin(this.y * this.swaySpeed + this.swayOffset) * 0.25;
+        this.rotation += this.rotationSpeed;
+        
+        if (this.y < -this.size * 2) {
+          this.reset(false);
+        }
+      }
+
+      draw() {
+        bgCtx.save();
+        bgCtx.globalAlpha = this.opacity;
+        bgCtx.translate(this.x, this.y);
+        bgCtx.rotate(this.rotation);
+        
+        bgCtx.beginPath();
+        bgCtx.moveTo(0, -this.size / 2);
+        bgCtx.bezierCurveTo(-this.size / 2, -this.size, -this.size, -this.size / 3, 0, this.size);
+        bgCtx.bezierCurveTo(this.size, -this.size / 3, this.size / 2, -this.size, 0, -this.size / 2);
+        
+        bgCtx.fillStyle = this.color;
+        bgCtx.fill();
+        bgCtx.restore();
+      }
+    }
+
+    const maxBgHearts = Math.min(45, Math.floor(window.innerWidth / 9));
+    for (let i = 0; i < maxBgHearts; i++) {
+      bgParticles.push(new BgHeart());
+    }
+
+    function animateBg() {
+      bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+      for (let i = 0; i < bgParticles.length; i++) {
+        bgParticles[i].update();
+        bgParticles[i].draw();
+      }
+      requestAnimationFrame(animateBg);
+    }
+
+    // CANVAS 2: EXPLOSÃO DE CORAÇÕES (FOGO DE ARTIFÍCIO)
+    const fwCanvas = document.getElementById('fireworks-canvas');
+    const fwCtx = fwCanvas.getContext('2d');
+    let fwParticles = [];
+    let isFwActive = false;
+
+    function resizeFwCanvas() {
+      fwCanvas.width = window.innerWidth;
+      fwCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeFwCanvas);
+    resizeFwCanvas();
+
+    class FwParticle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 8 + 3; // Velocidade do estouro
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed - Math.random() * 1.5;
+        this.size = Math.random() * 12 + 5;
+        this.alpha = 1;
+        this.decay = Math.random() * 0.014 + 0.008;
+        this.gravity = 0.1;
+        this.drag = 0.965;
+        
+        const colors = [
+          '#FF1493', // Deep Pink
+          '#FF69B4', // Hot Pink
+          '#FFB6C1', // Light Pink
+          '#9B111E', // Rubi
+          '#E5C158', // Dourado
+          '#FF4500'  // Vermelho
+        ];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.08;
+      }
+
+      update() {
+        this.vy += this.gravity;
+        this.vx *= this.drag;
+        this.vy *= this.drag;
+        this.x += this.vx;
+        this.y += this.vy;
+        this.alpha -= this.decay;
+        this.rotation += this.rotationSpeed;
+      }
+
+      draw() {
+        fwCtx.save();
+        fwCtx.globalAlpha = this.alpha;
+        fwCtx.translate(this.x, this.y);
+        fwCtx.rotate(this.rotation);
+        
+        fwCtx.beginPath();
+        fwCtx.moveTo(0, -this.size / 2);
+        fwCtx.bezierCurveTo(-this.size / 2, -this.size, -this.size, -this.size / 3, 0, this.size);
+        fwCtx.bezierCurveTo(this.size, -this.size / 3, this.size / 2, -this.size, 0, -this.size / 2);
+        
+        fwCtx.shadowBlur = 8;
+        fwCtx.shadowColor = this.color;
+        
+        fwCtx.fillStyle = this.color;
+        fwCtx.fill();
+        fwCtx.restore();
+      }
+    }
+
+    function explodeFireworks(x, y) {
+      isFwActive = true;
+      const amount = Math.min(85, Math.floor(window.innerWidth / 4) + 30);
+      for (let i = 0; i < amount; i++) {
+        fwParticles.push(new FwParticle(x, y));
+      }
+      animateFireworks();
+    }
+
+    function animateFireworks() {
+      if (!isFwActive) return;
+      fwCtx.clearRect(0, 0, fwCanvas.width, fwCanvas.height);
+      
+      let hasAliveParticles = false;
+      for (let i = fwParticles.length - 1; i >= 0; i--) {
+        const p = fwParticles[i];
+        p.update();
+        if (p.alpha > 0) {
+          p.draw();
+          hasAliveParticles = true;
+        } else {
+          fwParticles.splice(i, 1);
+        }
+      }
+      
+      if (hasAliveParticles) {
+        requestAnimationFrame(animateFireworks);
+      } else {
+        isFwActive = false;
+        fwCtx.clearRect(0, 0, fwCanvas.width, fwCanvas.height);
+      }
+    }
+
+    // CONTROLES DE ÁUDIO
+    const audio = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-toggle');
+    let isMusicPlaying = false;
+
+    function playMusic() {
+      audio.play().then(() => {
+        isMusicPlaying = true;
+        musicBtn.classList.add('visible');
+        musicBtn.classList.add('playing');
+      }).catch(err => {
+        console.log("Erro de autoplay bloqueado pelo navegador.");
+      });
+    }
+
+    musicBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (isMusicPlaying) {
+        audio.pause();
+        musicBtn.classList.remove('playing');
+        isMusicPlaying = false;
+      } else {
+        audio.play().then(() => {
+          musicBtn.classList.add('playing');
+          isMusicPlaying = true;
+        });
+      }
+    });
+
+    // LÓGICA DE ABERTURA DO ENVELOPE
+    const wrapper = document.getElementById('envelope-wrapper');
+    const waxSeal = document.getElementById('wax-seal');
+    const letter = document.getElementById('letter');
+
+    waxSeal.addEventListener('click', () => {
+      if (wrapper.classList.contains('open')) return;
+
+      wrapper.classList.add('open');
+      playMusic();
+
+      const rect = waxSeal.getBoundingClientRect();
+      const clickX = rect.left + rect.width / 2;
+      const clickY = rect.top + rect.height / 2;
+      
+      setTimeout(() => {
+        explodeFireworks(clickX, clickY);
+      }, 150);
+
+      setTimeout(() => {
+        letter.classList.add('emerge');
+      }, 700);
+
+      setTimeout(() => {
+        wrapper.classList.add('reading-mode');
+        updateSliderWidths();
+      }, 1800);
+    });
+
+    // SISTEMA DE NAVEGAÇÃO DE SLIDES (DRAG / SWIPE - 8 SLIDES)
+    const slider = document.getElementById('letter-slider');
+    const container = document.getElementById('slides-container');
+    const pageNumEl = document.getElementById('current-page-num');
+    const dotsContainer = document.getElementById('dots-container');
+    const swipeHint = document.getElementById('swipe-hint');
+    const letterTitle = document.getElementById('letter-title');
+    
+    let currentIndex = 0;
+    const totalSlides = 8; // Aumentado para 8
+    let isDragging = false;
+    let startX = 0;
+    let currentTranslate = 0;
+    let prevTranslate = 0;
+    let animationID = 0;
+
+    // Títulos dinâmicos para as 8 páginas
+    const slideTitles = [
+      "Minha Querida",
+      "Te Conhecer",
+      "Nosso Futuro",
+      "Nossa Promessa",
+      "Meu Coração",
+      "Porto Seguro",
+      "Nossa União",
+      "A Grande Pergunta"
+    ];
+
+    // Criar indicadores de página (bolinhas com coração para o ativo)
+    function createDots() {
+      dotsContainer.innerHTML = '';
+      for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if (i === 0) {
+          dot.classList.add('active-heart');
+          dot.classList.add('active');
+          dot.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
+        }
+        dot.addEventListener('click', () => navigateTo(i));
+        dotsContainer.appendChild(dot);
+      }
+    }
+
+    function updateDots() {
+      const dots = document.querySelectorAll('.dot');
+      dots.forEach((dot, index) => {
+        dot.className = 'dot';
+        dot.innerHTML = '';
+        dot.style.width = '8px';
+        dot.style.height = '8px';
+        if (index === currentIndex) {
+          dot.classList.add('active-heart');
+          dot.classList.add('active');
+          dot.style.width = '12px';
+          dot.style.height = '12px';
+          dot.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
+        }
+      });
+    }
+
+    function navigateTo(index) {
+      currentIndex = index;
+      prevTranslate = -currentIndex * slider.offsetWidth;
+      currentTranslate = prevTranslate;
+      setSliderPosition();
+      updatePageInfo();
+    }
+
+    function updatePageInfo() {
+      pageNumEl.textContent = currentIndex + 1;
+      letterTitle.textContent = slideTitles[currentIndex];
+      updateDots();
+
+      if (currentIndex > 0) {
+        swipeHint.classList.add('hidden');
+      }
+    }
+
+    function updateSliderWidths() {
+      prevTranslate = -currentIndex * slider.offsetWidth;
+      currentTranslate = prevTranslate;
+      setSliderPosition();
+    }
+
+    // Manipuladores de Gestos de Arrastar (Toque e Mouse)
+    slider.addEventListener('touchstart', touchStart);
+    slider.addEventListener('touchend', touchEnd);
+    slider.addEventListener('touchmove', touchMove);
+
+    slider.addEventListener('mousedown', touchStart);
+    slider.addEventListener('mouseup', touchEnd);
+    slider.addEventListener('mouseleave', touchEnd);
+    slider.addEventListener('mousemove', touchMove);
+
+    function getPositionX(event) {
+      return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+    }
+
+    function touchStart(event) {
+      // Se clicar nos botões do pedido final, não arrasta
+      if (event.target.closest('.heart-btn')) return;
+      if (event.type.includes('mouse') && event.target.tagName !== 'BUTTON') event.preventDefault();
+      
+      isDragging = true;
+      startX = getPositionX(event);
+      container.style.transition = 'none';
+      cancelAnimationFrame(animationID);
+    }
+
+    function touchMove(event) {
+      if (!isDragging) return;
+      const currentX = getPositionX(event);
+      const diffX = currentX - startX;
+      
+      currentTranslate = prevTranslate + diffX;
+      
+      // Efeito elástico nas pontas do slider
+      const minBound = 0;
+      const maxBound = -(totalSlides - 1) * slider.offsetWidth;
+      
+      if (currentTranslate > minBound) {
+        currentTranslate = diffX * 0.25;
+      } else if (currentTranslate < maxBound) {
+        const overflow = currentTranslate - maxBound;
+        currentTranslate = maxBound + overflow * 0.25;
+      }
+
+      setSliderPosition();
+    }
+
+    function touchEnd() {
+      if (!isDragging) return;
+      isDragging = false;
+      
+      container.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      
+      const movedBy = currentTranslate - prevTranslate;
+      const threshold = slider.offsetWidth * 0.16;
+
+      if (movedBy < -threshold && currentIndex < totalSlides - 1) {
+        currentIndex += 1;
+      } else if (movedBy > threshold && currentIndex > 0) {
+        currentIndex -= 1;
+      }
+
+      navigateTo(currentIndex);
+    }
+
+    function setSliderPosition() {
+      container.style.transform = `translateX(${currentTranslate}px)`;
+    }
+
+    window.addEventListener('resize', () => {
+      updateSliderWidths();
+    });
+
+    // INTERAÇÃO DO PEDIDO DE CASAMENTO (PÁGINA 8)
+    const btnSim = document.getElementById('btn-sim');
+    const btnNao = document.getElementById('btn-nao');
+    const slideFinal = document.getElementById('slide-final');
+
+    btnSim.addEventListener('click', (e) => {
+      e.stopPropagation();
+      
+      // Substitui o conteúdo da folha final pela confirmação emocionante
+      slideFinal.innerHTML = `
+        <div class="success-message">
+          <h2>Ela disse SIM! ❤️</h2>
+          <p>Eu te amo mais do que tudo, minha carneirinha! Nosso destino está selado para sempre. Mal posso esperar para passar o resto dos meus dias cuidando de você, te fazendo sorrir e construindo nossa linda família. Você é o meu maior tesouro!</p>
+        </div>
+      `;
+      
+      // Impede arrastar o slide após responder para ficar fixado na confirmação
+      slider.style.pointerEvents = 'none';
+
+      // Dispara chuva massiva de fogos de artifício em posições aleatórias
+      let counter = 0;
+      const interval = setInterval(() => {
+        const x = Math.random() * window.innerWidth;
+        // Explode na metade superior da tela para melhor visualização
+        const y = Math.random() * (window.innerHeight * 0.5) + window.innerHeight * 0.15;
+        explodeFireworks(x, y);
+        counter++;
+        if (counter > 18) clearInterval(interval);
+      }, 350);
+    });
+
+    // LÓGICA DO BOTÃO "NÃO" QUE ESCAPA DO CLIQUE/TOQUE
+    function moverBotaoNao(e) {
+      if (e) e.stopPropagation();
+      
+      const slide = btnNao.closest('.slide');
+      const slideWidth = slide.clientWidth;
+      const slideHeight = slide.clientHeight;
+      
+      // Dimensões do botão (70px x 70px) + margem de segurança
+      const btnSize = 75;
+      
+      // Limites horizontais e verticais relativos ao slide
+      const minX = 15;
+      const maxX = slideWidth - btnSize - 15;
+      const minY = 90; // Começa abaixo do texto da pergunta
+      const maxY = slideHeight - btnSize - 10;
+      
+      // Calcula coordenadas aleatórias dentro dos limites
+      const randomX = Math.random() * (maxX - minX) + minX;
+      const randomY = Math.random() * (maxY - minY) + minY;
+      
+      btnNao.style.position = 'absolute';
+      btnNao.style.left = `${randomX}px`;
+      btnNao.style.top = `${randomY}px`;
+      btnNao.style.margin = '0'; // Limpa margens automáticas de flex
+    }
+
+    btnNao.addEventListener('mouseover', moverBotaoNao);
+    btnNao.addEventListener('touchstart', (e) => {
+      e.preventDefault(); // Evita clique padrão e executa a fuga
+      moverBotaoNao(e);
+    });
+    btnNao.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      moverBotaoNao(e);
+    });
+
+    // INICIALIZAÇÃO GERAL
+    window.addEventListener('load', () => {
+      initBgSlideshow();
+      createDots();
+      animateBg();
+    });
+  </script>
+</body>
+</html>
