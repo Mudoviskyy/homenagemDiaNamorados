@@ -151,8 +151,11 @@
       transition: transform 0.8s ease, opacity 0.8s ease;
     }
 
-    .envelope-wrapper.reading-mode {
+    .reading-mode .envelope-wrapper {
+      opacity: 0;
+      transform: translateY(150px) scale(0.6);
       pointer-events: none;
+      transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
     .envelope {
@@ -299,42 +302,37 @@
 
     /* A CARTA (LETTER CARD) - RETANGULAR DEITADO NO MODO LEITURA */
     .letter {
-      position: absolute;
-      top: 0;
-      left: 10px;
-      width: 340px;
-      height: 220px;
+      position: fixed;
+      bottom: 25px; /* Fixado na parte inferior da tela para deixar o centro livre para as fotos */
+      left: 50%;
+      width: 94%;
+      max-width: 580px; /* Largura no desktop */
+      height: 380px;    /* Altura no desktop */
       background: radial-gradient(circle, #fffdfa 0%, #faf3e8 100%);
       border: 2px solid #e0c8b0;
       border-radius: 8px;
       padding: 12px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-      z-index: 2;
+      z-index: 100;
       opacity: 0;
-      transform: translateY(10px) scale(0.9);
+      /* Começa escondida, centralizada horizontalmente e alinhada verticalmente sobre o envelope */
+      transform: translate(-50%, -24vh) scale(0.75);
       pointer-events: none;
-      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s, width 0.8s, height 0.8s, left 0.8s, top 0.8s;
+      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s, width 0.8s, height 0.8s;
       overflow: hidden;
       display: flex;
       flex-direction: column;
     }
 
     /* Quando emerge do envelope */
-    .envelope-wrapper.open .letter.emerge {
+    .letter.emerge {
       opacity: 1;
-      transform: translateY(-145px) scale(1.02);
+      transform: translate(-50%, -41vh) scale(1.02);
     }
 
-    /* MODO LEITURA TELA CHEIA - RETANGULAR DEITADO (PAISAGEM) */
-    .envelope-wrapper.reading-mode .letter {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      width: 94%;
-      max-width: 580px; /* Aumentado de 540px */
-      height: 410px;    /* Aumentado de 360px para dar mais espaço vertical */
-      transform: translate(-50%, -50%) scale(1);
-      z-index: 100;
+    /* MODO LEITURA TELA CHEIA - A carta desce para a parte inferior e se estabiliza */
+    .reading-mode .letter {
+      transform: translate(-50%, 0) scale(1);
       pointer-events: auto;
       box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
       border: 2.5px solid var(--ruby-color);
@@ -342,13 +340,21 @@
 
     /* Otimização Responsiva para Celulares em modo Retrato */
     @media (max-width: 600px) {
-      .envelope-wrapper.reading-mode .letter {
-        height: 355px; /* Aumentado de 310px para mais espaço de leitura */
+      .letter {
+        height: 325px; /* Um pouco mais baixa no celular para liberar mais espaço superior para as fotos */
+        transform: translate(-50%, -21vh) scale(0.75);
+      }
+      .letter.emerge {
+        transform: translate(-50%, -36vh) scale(1.02);
+      }
+      .reading-mode .letter {
+        height: 325px;
+        transform: translate(-50%, 0) scale(1);
       }
       .slide-content {
         font-size: 0.94rem !important; /* Aumentado para melhor leitura */
         line-height: 1.48 !important;
-        max-height: 175px !important; /* Limite de conteúdo com scroll se necessário */
+        max-height: 155px !important; /* Limite de conteúdo com scroll se necessário */
       }
       .slide-content p {
         margin-bottom: 6px !important;
@@ -371,18 +377,6 @@
       .btn-text {
         font-size: 0.9rem !important;
       }
-    }
-
-    /* Esmaecer o envelope original no modo de leitura */
-    .envelope-wrapper.reading-mode .back-flap,
-    .envelope-wrapper.reading-mode .left-flap,
-    .envelope-wrapper.reading-mode .right-flap,
-    .envelope-wrapper.reading-mode .bottom-flap,
-    .envelope-wrapper.reading-mode .top-flap {
-      opacity: 0 !important;
-      transform: translateY(120px) scale(0.8);
-      pointer-events: none;
-      transition: opacity 0.8s, transform 0.8s;
     }
 
     /* MOLDURA E BORDAS INTERNAS DA CARTA */
@@ -804,7 +798,7 @@
     <!-- Canvas para Fogos de Artifício (Foreground) -->
     <canvas id="fireworks-canvas"></canvas>
 
-    <!-- Envelope e Carta -->
+    <!-- Envelope -->
     <div class="envelope-wrapper" id="envelope-wrapper">
       <div class="open-instruction">Toque no selo para abrir</div>
       
@@ -812,124 +806,6 @@
         <!-- Parte traseira interna do envelope -->
         <div class="back-flap"></div>
         
-        <!-- A Carta que sai de dentro (Formato Retangular Deitado no Leitura) -->
-        <div class="letter" id="letter">
-          <div class="letter-frame"></div>
-          
-          <!-- Cabeçalho com Página -->
-          <div class="letter-header">
-            <h3 id="letter-title">Minha Querida</h3>
-            <div class="page-indicator">
-              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-              <span>Folha <span id="current-page-num">1</span> de 8</span>
-            </div>
-          </div>
-
-          <!-- Slider das Mensagens -->
-          <div class="letter-slider" id="letter-slider">
-            <div class="slides-container" id="slides-container">
-              
-              <!-- Página 1 -->
-              <div class="slide">
-                <div class="slide-content">
-                  <p><strong>Pelas dificuldades que passamos e que vamos passar...</strong></p>
-                  <p>sei que nosso amor é mais forte do que qualquer tempestade. Cada obstáculo superado nos uniu ainda mais, e tenho a certeza absoluta de que, de mãos dadas, podemos vencer qualquer desafio que o futuro colocar em nosso caminho. Você é minha força diária, a razão do meu sorriso e o meu porto seguro em meio ao caos.</p>
-                </div>
-                <div class="slide-signature">Com todo amor, Ebers</div>
-              </div>
-
-              <!-- Página 2 -->
-              <div class="slide">
-                <div class="slide-content">
-                  <p><strong>Te conhecer foi algo que mudou minha vida...</strong></p>
-                  <p>de uma forma tão linda que até hoje sorrio ao lembrar do início de tudo. De repente, o mundo ganhou mais cor e meu coração encontrou o seu verdadeiro lar. Cada risada, cada conversa e cada momento ao seu lado me fez perceber que a vida é muito mais bonita com você nela. Você trouxe uma paz que eu nunca soube que existia.</p>
-                </div>
-                <div class="slide-signature">Para sempre seu</div>
-              </div>
-
-              <!-- Página 3 -->
-              <div class="slide">
-                <div class="slide-content">
-                  <p><strong>Quero construir um futuro próspero junto ao seu lado...</strong></p>
-                  <p>onde possamos colher os frutos de toda a nossa cumplicidade e dedicação. Imagino nossa casa cheia de paz, conquistas compartilhadas e a calmaria de um lar verdadeiramente abençoado. Quero planejar cada passo do nosso amanhã sabendo que o meu destino está entrelaçado ao seu, e trabalhar dia após dia para realizar todos os nossos sonhos.</p>
-                </div>
-                <div class="slide-signature">De mãos dadas</div>
-              </div>
-
-              <!-- Página 4 -->
-              <div class="slide">
-                <div class="slide-content">
-                  <p><strong>Não se preocupe, nós vamos casar, minha querida...</strong></p>
-                  <p>o nosso momento especial está guardado por Deus e vai acontecer exatamente como sonhamos. Esse é o meu compromisso mais sincero com você e com a nossa história. Quero te ver vestida de noiva, olhar nos seus olhos diante do altar e prometer te amar por todos os dias da minha vida. O nosso 'para sempre' está muito perto de começar oficialmente.</p>
-                </div>
-                <div class="slide-signature">Meu compromisso eterno</div>
-              </div>
-
-              <!-- Página 5 -->
-              <div class="slide">
-                <div class="slide-content">
-                  <p><strong>Eu te amo, quero ter você ao meu lado pelo resto da vida e não fique pensando bobagens...</strong></p>
-                  <p>porque você é a única dona do meu coração. Nenhuma dúvida ou insegurança pode apagar o que sinto por você. Quando digo que é para sempre, é com toda a certeza da minha alma. Deixe de lado os medos e confie no que construímos. Eu sou seu, você é minha, e o nosso amor é eterno, Nilceia.</p>
-                </div>
-                <div class="slide-signature">Para todo o sempre</div>
-              </div>
-
-              <!-- Página 6 (Nova) -->
-              <div class="slide">
-                <div class="slide-content">
-                  <p><strong>Cada pequeno detalhe em você me faz ter certeza...</strong></p>
-                  <p>de que fomos feitos um para o outro. O seu jeito doce de sorrir, a sua voz que me acalma nos dias difíceis, e até as nossas pequenas manias compartilhadas. Você é a minha paz em meio à correria do mundo, e a cada novo amanhecer, eu me pego te amando ainda mais do que no dia anterior. Você me completa por inteiro.</p>
-                </div>
-                <div class="slide-signature">Com todo o meu coração</div>
-              </div>
-
-              <!-- Página 7 (Nova) -->
-              <div class="slide">
-                <div class="slide-content">
-                  <p><strong>A nossa jornada é feita de aprendizado, carinho e crescimento mútuo...</strong></p>
-                  <p>Olho para trás e vejo o quanto evoluímos, o quanto nos apoiamos e o quanto o nosso amor amadureceu. Você me inspira a ser um homem melhor a cada dia, e tenho muito orgulho da história de amor e dedicação que estamos escrevendo juntos. O que sinto por você ultrapassa qualquer barreira; é um verdadeiro encontro de almas.</p>
-                </div>
-                <div class="slide-signature">Minha parceira de vida</div>
-              </div>
-
-              <!-- Página 8 (Final com o Pedido de Casamento) -->
-              <div class="slide" id="slide-final">
-                <div class="slide-content">
-                  <p>Nilceia, minha querida, minha companheira de todas as horas, meu grande amor... Depois de tudo o que passamos, de tudo o que construímos e de tudo o que ainda sonhamos juntos, há apenas uma pergunta que falta para selar o nosso feliz para sempre:</p>
-                  <p style="text-align: center; font-size: 1.15rem; margin-top: 10px;"><strong>Você quer ser carneirinho como eu?</strong></p>
-                </div>
-                <div class="proposal-buttons">
-                  <button id="btn-sim" class="heart-btn btn-sim" aria-label="Sim">
-                    <svg viewBox="0 0 24 24">
-                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                    </svg>
-                    <span class="btn-text">Sim</span>
-                  </button>
-                  <button id="btn-nao" class="heart-btn btn-nao" aria-label="Não">
-                    <svg viewBox="0 0 24 24">
-                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                    </svg>
-                    <span class="btn-text">Não</span>
-                  </button>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          <!-- Rodapé com bolinhas e dica de arrastar -->
-          <div class="letter-footer">
-            <div class="dots-container" id="dots-container">
-              <!-- Gerado via JavaScript -->
-            </div>
-            <div class="swipe-hint" id="swipe-hint">
-              <svg viewBox="0 0 24 24"><path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"/></svg>
-              <span>Arraste para o lado</span>
-            </div>
-          </div>
-
-        </div> <!-- Fim Letter -->
-
         <!-- Abas da frente do envelope -->
         <div class="left-flap"></div>
         <div class="right-flap"></div>
@@ -942,7 +818,123 @@
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
           </svg>
         </div>
+      </div>
+    </div>
 
+    <!-- A Carta (independente, como irmã do envelope para evitar conflitos de posicionamento) -->
+    <div class="letter" id="letter">
+      <div class="letter-frame"></div>
+      
+      <!-- Cabeçalho com Página -->
+      <div class="letter-header">
+        <h3 id="letter-title">Minha Querida</h3>
+        <div class="page-indicator">
+          <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          <span>Folha <span id="current-page-num">1</span> de 8</span>
+        </div>
+      </div>
+
+      <!-- Slider das Mensagens -->
+      <div class="letter-slider" id="letter-slider">
+        <div class="slides-container" id="slides-container">
+          
+          <!-- Página 1 -->
+          <div class="slide">
+            <div class="slide-content">
+              <p><strong>Pelas dificuldades que passamos e que vamos passar...</strong></p>
+              <p>sei que nosso amor é mais forte do que qualquer tempestade. Cada obstáculo superado nos uniu ainda mais, e tenho a certeza absoluta de que, de mãos dadas, podemos vencer qualquer desafio que o futuro colocar em nosso caminho. Você é minha força diária, a razão do meu sorriso e o meu porto seguro em meio ao caos.</p>
+            </div>
+            <div class="slide-signature">Com todo amor, Ebers</div>
+          </div>
+
+          <!-- Página 2 -->
+          <div class="slide">
+            <div class="slide-content">
+              <p><strong>Te conhecer foi algo que mudou minha vida...</strong></p>
+              <p>de uma forma tão linda que até hoje sorrio ao lembrar do início de tudo. De repente, o mundo ganhou mais cor e meu coração encontrou o seu verdadeiro lar. Cada risada, cada conversa e cada momento ao seu lado me fez perceber que a vida é muito mais bonita com você nela. Você trouxe uma paz que eu nunca soube que existia.</p>
+            </div>
+            <div class="slide-signature">Para sempre seu</div>
+          </div>
+
+          <!-- Página 3 -->
+          <div class="slide">
+            <div class="slide-content">
+              <p><strong>Quero construir um futuro próspero junto ao seu lado...</strong></p>
+              <p>onde possamos colher os frutos de toda a nossa cumplicidade e dedicação. Imagino nossa casa cheia de paz, conquistas compartilhadas e a calmaria de um lar verdadeiramente abençoado. Quero planejar cada passo do nosso amanhã sabendo que o meu destino está entrelaçado ao seu, e trabalhar dia após dia para realizar todos os nossos sonhos.</p>
+            </div>
+            <div class="slide-signature">De mãos dadas</div>
+          </div>
+
+          <!-- Página 4 -->
+          <div class="slide">
+            <div class="slide-content">
+              <p><strong>Não se preocupe, nós vamos casar, minha querida...</strong></p>
+              <p>o nosso momento especial está guardado por Deus e vai acontecer exatamente como sonhamos. Esse é o meu compromisso mais sincero com você e com a nossa história. Quero te ver vestida de noiva, olhar nos seus olhos diante do altar e prometer te amar por todos os dias da minha vida. O nosso 'para sempre' está muito perto de começar oficialmente.</p>
+            </div>
+            <div class="slide-signature">Meu compromisso eterno</div>
+          </div>
+
+          <!-- Página 5 -->
+          <div class="slide">
+            <div class="slide-content">
+              <p><strong>Eu te amo, quero ter você ao meu lado pelo resto da vida e não fique pensando bobagens...</strong></p>
+              <p>porque você é a única dona do meu coração. Nenhuma dúvida ou insecurity pode apagar o que sinto por você. Quando digo que é para sempre, é com toda a certeza da minha alma. Deixe de lado os medos e confie no que construímos. Eu sou seu, você é minha, e o nosso amor é eterno, Nilceia.</p>
+            </div>
+            <div class="slide-signature">Para todo o sempre</div>
+          </div>
+
+          <!-- Página 6 (Nova) -->
+          <div class="slide">
+            <div class="slide-content">
+              <p><strong>Cada pequeno detalhe em você me faz ter certeza...</strong></p>
+              <p>de que fomos feitos um para o outro. O seu jeito doce de sorrir, a sua voz que me acalma nos dias difíceis, e até as nossas pequenas manias compartilhadas. Você é a minha paz em meio à correria do mundo, e a cada novo amanhecer, eu me pego te amando ainda mais do que no dia anterior. Você me completa por inteiro.</p>
+            </div>
+            <div class="slide-signature">Com todo o meu coração</div>
+          </div>
+
+          <!-- Página 7 (Nova) -->
+          <div class="slide">
+            <div class="slide-content">
+              <p><strong>A nossa jornada é feita de aprendizado, carinho e crescimento mútuo...</strong></p>
+              <p>Olho para trás e vejo o quanto evoluímos, o quanto nos apoiamos e o quanto o nosso amor amadureceu. Você me inspira a ser um homem melhor a cada dia, e tenho muito orgulho da história de amor e dedicação que estamos escrevendo juntos. O que sinto por você ultrapassa qualquer barreira; é um verdadeiro encontro de almas.</p>
+            </div>
+            <div class="slide-signature">Minha parceira de vida</div>
+          </div>
+
+          <!-- Página 8 (Final com o Pedido de Casamento) -->
+          <div class="slide" id="slide-final">
+            <div class="slide-content">
+              <p>Nilceia, minha querida, minha companheira de todas as horas, meu grande amor... Depois de tudo o que passamos, de tudo o que construímos e de tudo o que ainda sonhamos juntos, há apenas uma pergunta que falta para selar o nosso feliz para sempre:</p>
+              <p style="text-align: center; font-size: 1.15rem; margin-top: 10px;"><strong>Você quer ser carneirinho como eu?</strong></p>
+            </div>
+            <div class="proposal-buttons">
+              <button id="btn-sim" class="heart-btn btn-sim" aria-label="Sim">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                <span class="btn-text">Sim</span>
+              </button>
+              <button id="btn-nao" class="heart-btn btn-nao" aria-label="Não">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                <span class="btn-text">Não</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Rodapé com bolinhas e dica de arrastar -->
+      <div class="letter-footer">
+        <div class="dots-container" id="dots-container">
+          <!-- Gerado via JavaScript -->
+        </div>
+        <div class="swipe-hint" id="swipe-hint">
+          <svg viewBox="0 0 24 24"><path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"/></svg>
+          <span>Arraste para o lado</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1265,7 +1257,7 @@
       }, 700);
 
       setTimeout(() => {
-        wrapper.classList.add('reading-mode');
+        document.body.classList.add('reading-mode');
         updateSliderWidths();
       }, 1800);
     });
