@@ -374,6 +374,11 @@
         overflow-y: auto !important;
       }
 
+      #slide-final.success-active .slide-content {
+        max-height: 240px !important;
+        overflow-y: auto !important;
+      }
+
       .slide-content p {
         margin-bottom: 6px !important;
       }
@@ -1777,13 +1782,29 @@
     btnSim.addEventListener('click', (e) => {
       e.stopPropagation();
 
-      // Substitui o conteúdo da folha final pela confirmação emocionante
-      slideFinal.innerHTML = `
-        <div class="success-message">
-          <h2>Ela disse SIM! ❤️</h2>
-          <p>Eu te amo mais do que tudo, minha carneirinha! Nosso destino está selado para sempre. Mal posso esperar para passar o resto dos meus dias cuidando de você, te fazendo sorrir e construindo nossa linda família. Você é o meu maior tesouro!</p>
-        </div>
-      `;
+      const slideContent = slideFinal.querySelector('.slide-content');
+      const proposalButtons = slideFinal.querySelector('.proposal-buttons');
+
+      // Adiciona a classe de sucesso para aumentar a altura disponível no mobile
+      slideFinal.classList.add('success-active');
+
+      if (slideContent) {
+        slideContent.innerHTML = `
+          <div class="success-message">
+            <h2>Ela disse SIM! ❤️</h2>
+            <p>Eu te amo mais do que tudo, minha carneirinha! Nosso destino está selado para sempre. Mal posso esperar para passar o resto dos meus dias cuidando de você, te fazendo sorrir e construindo nossa linda família. Você é o meu maior tesouro!</p>
+          </div>
+        `;
+      }
+
+      if (proposalButtons) {
+        proposalButtons.style.display = 'none';
+      }
+
+      // Remove o botão Não se ele estiver anexado diretamente ao slide
+      if (btnNao && btnNao.parentNode) {
+        btnNao.remove();
+      }
 
       // Impede arrastar o slide após responder para ficar fixado na confirmação
       slider.style.pointerEvents = 'none';
@@ -1804,7 +1825,14 @@
     function moverBotaoNao(e) {
       if (e) e.stopPropagation();
 
-      const slide = btnNao.closest('.slide');
+      const slide = document.getElementById('slide-final');
+      
+      // Anexa o botão diretamente ao contêiner .slide para evitar bugs de offset em contêineres flex/static
+      if (btnNao.parentElement !== slide) {
+        slide.appendChild(btnNao);
+        btnNao.style.position = 'absolute';
+      }
+
       const slideWidth = slide.clientWidth;
       const slideHeight = slide.clientHeight;
 
@@ -1822,11 +1850,10 @@
       const randomX = Math.random() * (maxX - minX) + minX;
       const randomY = Math.random() * (maxY - minY) + minY;
 
-      btnNao.style.position = 'absolute';
       btnNao.style.left = `${randomX}px`;
       btnNao.style.top = `${randomY}px`;
       btnNao.style.margin = '0'; // Limpa margens automáticas de flex
-      btnNao.style.zIndex = '5'; // Garante que fique por cima do texto e visível para clique no mobile
+      btnNao.style.zIndex = '1000'; // Garante que fique por cima do texto e visível para clique no mobile
 
       // Adiciona o quique (3 vezes)
       btnNao.classList.remove('quicar-3x');
