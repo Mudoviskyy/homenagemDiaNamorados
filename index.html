@@ -379,6 +379,11 @@
         overflow-y: auto !important;
       }
 
+      #slide-final.success-active {
+        padding-top: 2px !important;
+        padding-bottom: 2px !important;
+      }
+
       .success-message h2 {
         font-size: 1.8rem !important;
       }
@@ -1632,6 +1637,7 @@
     let currentIndex = 0;
     const totalSlides = 8; // Aumentado para 8
     let isDragging = false;
+    let dragEnabled = true;
     let startX = 0;
     let currentTranslate = 0;
     let prevTranslate = 0;
@@ -1729,6 +1735,7 @@
     }
 
     function touchStart(event) {
+      if (!dragEnabled) return;
       // Se clicar nos botões do pedido final, não arrasta
       if (event.target.closest('.heart-btn')) return;
       if (event.type.includes('mouse') && event.target.tagName !== 'BUTTON') event.preventDefault();
@@ -1825,7 +1832,7 @@
       }
 
       // Impede arrastar o slide após responder para ficar fixado na confirmação
-      slider.style.pointerEvents = 'none';
+      dragEnabled = false;
 
       // Dispara chuva massiva de fogos de artifício em posições aleatórias
       let counter = 0;
