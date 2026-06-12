@@ -576,7 +576,7 @@
       justify-content: center;
       align-items: center;
       margin-top: 8px;
-      position: relative;
+      position: static; /* Alterado de relative para static para permitir que o botão 'Não' se posicione em relação ao slide */
       width: 100%;
       min-height: 80px;
       flex-shrink: 0;
@@ -629,6 +629,30 @@
       font-weight: 600;
       font-size: 0.95rem;
       pointer-events: none;
+    }
+
+    /* Animação de quique (3 vezes) para o botão Não */
+    .btn-nao.quicar-3x {
+      animation: bounce-3x 0.5s ease-in-out;
+      animation-iteration-count: 3;
+    }
+
+    @keyframes bounce-3x {
+      0%, 100% {
+        transform: translateY(0) scale(1);
+      }
+      30% {
+        transform: translateY(-25px) scale(1.15);
+      }
+      50% {
+        transform: translateY(0) scale(0.9);
+      }
+      75% {
+        transform: translateY(-12px) scale(1.05);
+      }
+      90% {
+        transform: translateY(0) scale(0.98);
+      }
     }
 
     /* Tela de Sucesso */
@@ -1788,10 +1812,11 @@
       const btnSize = 75;
 
       // Limites horizontais e verticais relativos ao slide
+      // minY agora é menor (20px) para permitir que suba e fique sob a área do texto
       const minX = 15;
       const maxX = slideWidth - btnSize - 15;
-      const minY = 90; // Começa abaixo do texto da pergunta
-      const maxY = slideHeight - btnSize - 10;
+      const minY = 20; 
+      const maxY = slideHeight - btnSize - 15;
 
       // Calcula coordenadas aleatórias dentro dos limites
       const randomX = Math.random() * (maxX - minX) + minX;
@@ -1801,6 +1826,12 @@
       btnNao.style.left = `${randomX}px`;
       btnNao.style.top = `${randomY}px`;
       btnNao.style.margin = '0'; // Limpa margens automáticas de flex
+      btnNao.style.zIndex = '5'; // Garante que fique por cima do texto e visível para clique no mobile
+
+      // Adiciona o quique (3 vezes)
+      btnNao.classList.remove('quicar-3x');
+      void btnNao.offsetWidth; // Força reflow para reiniciar a animação
+      btnNao.classList.add('quicar-3x');
     }
 
     btnNao.addEventListener('mouseover', moverBotaoNao);
