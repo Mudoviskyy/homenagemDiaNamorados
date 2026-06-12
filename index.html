@@ -1082,8 +1082,11 @@
               <p><strong>Te conhecer foi algo que mudou minha vida...</strong></p>
               <p>de uma forma tão linda que até hoje sorrio ao lembrar do início de tudo. De repente, o mundo ganhou
                 mais cor e meu coração encontrou o seu verdadeiro lar. Cada risada, cada conversa e cada momento ao seu
-                lado me fez perceber que a vida é muito mais bonita com você nela. Você trouxe uma paz que eu nunca
-                soube que existia.</p>
+                lado me fez perceber que a vida é muito mais bonita com você nela. Você me mostrou coisas que eu nunca
+                havia visto e nem sentido.
+                Você me fez ver a vida de uma forma diferente, pelo prisma dos seus olhos e isso me marcou de uma forma
+                que nem você imagina!
+              </p>
             </div>
             <div class="slide-signature">Para sempre seu</div>
           </div>
@@ -1095,7 +1098,8 @@
               <p>onde possamos colher os frutos de toda a nossa cumplicidade e dedicação. Imagino nossa casa cheia de
                 paz, conquistas compartilhadas e a calmaria de um lar verdadeiramente abençoado. Quero planejar cada
                 passo do nosso amanhã sabendo que o meu destino está entrelaçado ao seu, e trabalhar dia após dia para
-                realizar todos os nossos sonhos.</p>
+                realizar todos os nossos sonhos. Portanto, minha amada, continue plantando flores e regando o nosso
+                amor, pois eu farei a minha parte para que nossa vida seja leve, feliz e repleta de realizações.</p>
             </div>
             <div class="slide-signature">De mãos dadas</div>
           </div>
@@ -1104,9 +1108,11 @@
           <div class="slide">
             <div class="slide-content">
               <p><strong>Não se preocupe, nós vamos casar, minha querida...</strong></p>
-              <p>o nosso momento especial está guardado por Deus e vai acontecer exatamente como sonhamos. Esse é o meu
-                compromisso mais sincero com você e com a nossa história. O nosso 'para sempre' está muito perto de
-                começar oficialmente.</p>
+              <p>o nosso momento especial está guardado por Deus e vai acontecer exatamente como sonhamos, com aquela
+                aliança cara de 10 mil. Esse é o meu
+                compromisso mais sincero com você e com a nossa história, digo também que você faz o meu tipo em vários
+                sentidos, morena, tatuada, toda gostosa!! O nosso 'para sempre' está muito perto de
+                começar oficialmente. Nem que eu precisa dar o meu cu, e talvez o seu hahahhaha</p>
             </div>
             <div class="slide-signature">Meu compromisso eterno</div>
           </div>
@@ -1118,7 +1124,8 @@
                   bobagens...</strong></p>
               <p>porque você é a única dona do meu coração. Nenhuma dúvida ou insegurança pode apagar o que sinto por
                 você. Quando digo que é para sempre, é com toda a certeza da minha alma. Deixe de lado os medos e confie
-                no que vamos construir. Eu sou seu, você é minha, e o nosso amor é eterno, Nilceia.</p>
+                no que vamos construir. Eu sou seu, você é minha, e o nosso amor é eterno, carregando os catioritos e os
+                gatitos para onde quer que a gente vá, Nilceia.</p>
             </div>
             <div class="slide-signature">Para todo o sempre</div>
           </div>
@@ -1139,10 +1146,12 @@
           <!-- Página 7 (Nova) -->
           <div class="slide">
             <div class="slide-content">
-              <p><strong>Sua personalidade é uma das coisas em que admiro em ti...</strong></p>
+              <p><strong>Sua personalidade é uma das coisas em que admiro em ti, como diz a música, a razão é
+                  VOCÊ...</strong></p>
               <p>essa sua determinação, essa sua força, essa sua garra... É contagiante, me inspira e me faz querer ser
                 uma pessoa melhor. Você é forte, guerreira e incansável, e eu sou muito orgulhoso de caminhar ao seu
-                lado.</p>
+                lado e ver que o que você defende, ideias, princípios, lealdade, teimosia às vezes faz ser o que você é,
+                a razão passou a ser você naquele dia 07 de setembro e agora sempre será mesmo após o desencarne!</p>
             </div>
             <div class="slide-signature">Minha parceira de vida</div>
           </div>
@@ -1151,7 +1160,8 @@
           <div class="slide" id="slide-final">
             <div class="slide-content">
               <p>Nilceia, minha querida, minha companheira de todas as horas, meu grande amor... Depois de tudo o que
-                passamos, de tudo o que construímos e de tudo o que ainda sonhamos juntos, há apenas uma pergunta que
+                passamos, de tudo o que construímos e de tudo o que ainda sonhamos juntos, há apenas uma pergunta, como
+                num ABRACADRABA só como teste clique em não :) e descubra o que
                 falta para selar o nosso feliz para sempre:</p>
               <p style="text-align: center; font-size: 1.15rem; margin-top: 10px;"><strong>Você quer ser carneirinho
                   como eu?</strong></p>
@@ -1487,9 +1497,9 @@
 
     function playSongForSlide(index) {
       if (index < 0 || index >= slideSongs.length) return;
-      
+
       const targetSrc = slideSongs[index];
-      
+
       if (currentSongIndex === index) {
         if (isMusicPlaying && audio.paused) {
           audio.play().catch(e => console.log(e));
@@ -1498,15 +1508,15 @@
       }
 
       currentSongIndex = index;
-      
+
       audio.pause();
       audio.src = targetSrc;
       audio.load();
-      
+
       isMusicPlaying = true;
       musicBtn.classList.add('visible');
       musicBtn.classList.add('playing');
-      
+
       audio.play().then(() => {
         console.log("Tocando slide " + (index + 1) + ": " + targetSrc);
       }).catch(err => {
