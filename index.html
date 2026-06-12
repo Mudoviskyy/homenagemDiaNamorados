@@ -375,8 +375,17 @@
       }
 
       #slide-final.success-active .slide-content {
-        max-height: 240px !important;
+        max-height: 200px !important; /* Ajustado para caber perfeitamente sem transbordar o card de 325px */
         overflow-y: auto !important;
+      }
+
+      .success-message h2 {
+        font-size: 1.8rem !important;
+      }
+
+      .success-message p {
+        font-size: 0.84rem !important;
+        line-height: 1.35 !important;
       }
 
       .slide-content p {
@@ -678,6 +687,14 @@
       font-size: 0.98rem;
       line-height: 1.5;
       color: var(--text-dark);
+    }
+
+    /* Elementos ocultados ao confirmar o pedido de casamento */
+    .letter.success-active .letter-footer {
+      display: none !important;
+    }
+    .letter.success-active .page-indicator {
+      display: none !important;
     }
 
     @keyframes scale-up {
@@ -1787,6 +1804,7 @@
 
       // Adiciona a classe de sucesso para aumentar a altura disponível no mobile
       slideFinal.classList.add('success-active');
+      letter.classList.add('success-active');
 
       if (slideContent) {
         slideContent.innerHTML = `
