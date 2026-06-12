@@ -482,7 +482,6 @@
 
     .slide {
       flex: 0 0 12.5%;
-      /* Garante que cada folha ocupe exatamente a largura total da carta, sem encolher ou expandir */
       width: 12.5%;
       height: 100%;
       padding: 4px 20px;
@@ -491,15 +490,35 @@
       justify-content: center;
       user-select: none;
       position: relative;
-      /* Mantém o botão "Não" contido no slide */
-      overflow: hidden;
     }
 
-    /* Slide final (pedido) alinha ao topo para não cortar texto */
+    /* Slide final (pedido de casamento) - alinha pelo topo e compacto para caber sem scroll */
     #slide-final {
       justify-content: flex-start;
-      padding-top: 8px;
-      overflow-y: auto;
+      padding-top: 6px;
+      padding-bottom: 4px;
+    }
+
+    #slide-final .slide-content {
+      font-size: 0.82rem;
+      line-height: 1.38;
+      max-height: none;      /* Remove limite de altura */
+      overflow-y: visible;   /* Sem scroll - o conteúdo precisa caber */
+    }
+
+    #slide-final .slide-content p {
+      margin-bottom: 5px;
+    }
+
+    #slide-final .proposal-buttons {
+      margin-top: 6px;
+      min-height: 68px;
+      gap: 22px;
+    }
+
+    #slide-final .heart-btn {
+      width: 60px;
+      height: 60px;
     }
 
     .slide-content {
