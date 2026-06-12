@@ -375,7 +375,8 @@
       }
 
       #slide-final.success-active .slide-content {
-        max-height: 200px !important; /* Ajustado para caber perfeitamente sem transbordar o card de 325px */
+        max-height: 200px !important;
+        /* Ajustado para caber perfeitamente sem transbordar o card de 325px */
         overflow-y: auto !important;
       }
 
@@ -595,7 +596,8 @@
       justify-content: center;
       align-items: center;
       margin-top: 8px;
-      position: static; /* Alterado de relative para static para permitir que o botão 'Não' se posicione em relação ao slide */
+      position: static;
+      /* Alterado de relative para static para permitir que o botão 'Não' se posicione em relação ao slide */
       width: 100%;
       min-height: 80px;
       flex-shrink: 0;
@@ -657,18 +659,24 @@
     }
 
     @keyframes bounce-3x {
-      0%, 100% {
+
+      0%,
+      100% {
         transform: translateY(0) scale(1);
       }
+
       30% {
         transform: translateY(-25px) scale(1.15);
       }
+
       50% {
         transform: translateY(0) scale(0.9);
       }
+
       75% {
         transform: translateY(-12px) scale(1.05);
       }
+
       90% {
         transform: translateY(0) scale(0.98);
       }
@@ -698,6 +706,7 @@
     .letter.success-active .letter-footer {
       display: none !important;
     }
+
     .letter.success-active .page-indicator {
       display: none !important;
     }
@@ -1817,7 +1826,7 @@
         slideContent.innerHTML = `
           <div class="success-message">
             <h2>Ela disse SIM! ❤️</h2>
-            <p>Eu te amo mais do que tudo, minha carneirinha! Nosso destino está selado para sempre. Mal posso esperar para passar o resto dos meus dias cuidando de você, te fazendo sorrir e construindo nossa linda família. Você é o meu maior tesouro!</p>
+            <p>Eu te amo mais do que tudo, minha carneirinha! Nosso destino está selado para sempre. Mal posso esperar para passar o resto dos meus dias cuidando de você, te fazendo sorrir e construindo nossa linda família. Você é o meu maior tesouro! FELIZ DA DOS NAMORADOS</p>
           </div>
         `;
       }
@@ -1851,7 +1860,7 @@
       if (e) e.stopPropagation();
 
       const slide = document.getElementById('slide-final');
-      
+
       // Anexa o botão diretamente ao contêiner .slide para evitar bugs de offset em contêineres flex/static
       if (btnNao.parentElement !== slide) {
         slide.appendChild(btnNao);
@@ -1868,7 +1877,7 @@
       // minY agora é menor (20px) para permitir que suba e fique sob a área do texto
       const minX = 15;
       const maxX = slideWidth - btnSize - 15;
-      const minY = 20; 
+      const minY = 20;
       const maxY = slideHeight - btnSize - 15;
 
       // Calcula coordenadas aleatórias dentro dos limites
