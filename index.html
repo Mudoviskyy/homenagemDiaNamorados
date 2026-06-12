@@ -502,8 +502,10 @@
     #slide-final .slide-content {
       font-size: 0.82rem;
       line-height: 1.38;
-      max-height: none;      /* Remove limite de altura */
-      overflow-y: visible;   /* Sem scroll - o conteúdo precisa caber */
+      max-height: none;
+      /* Remove limite de altura */
+      overflow-y: visible;
+      /* Sem scroll - o conteúdo precisa caber */
     }
 
     #slide-final .slide-content p {
@@ -577,7 +579,8 @@
       position: relative;
       width: 100%;
       min-height: 80px;
-      flex-shrink: 0; /* Não deixa os botões encolherem */
+      flex-shrink: 0;
+      /* Não deixa os botões encolherem */
       /* Espaço para o botão fugir */
     }
 
@@ -853,10 +856,12 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(18, 5, 10, 0.88); /* Tom escuro e romântico com mais opacidade */
+      background: rgba(18, 5, 10, 0.88);
+      /* Tom escuro e romântico com mais opacidade */
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      z-index: 9999; /* Fica acima de tudo, inclusive da música se necessário */
+      z-index: 9999;
+      /* Fica acima de tudo, inclusive da música se necessário */
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -884,7 +889,8 @@
     }
 
     .intro-text {
-      font-family: 'Dancing Script', cursive; /* Fonte cursiva bem bonita e romântica */
+      font-family: 'Dancing Script', cursive;
+      /* Fonte cursiva bem bonita e romântica */
       font-size: 1.9rem;
       line-height: 1.5;
       color: #fff;
@@ -946,7 +952,8 @@
       letter-spacing: 0.5px;
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
       pointer-events: none;
-      padding-bottom: 2px; /* Ajuste sutil para alinhar no meio do coração */
+      padding-bottom: 2px;
+      /* Ajuste sutil para alinhar no meio do coração */
     }
 
     @keyframes fadeInUp {
@@ -963,11 +970,13 @@
   <!-- Banner de Boas-Vindas / Intro -->
   <div id="intro-overlay" class="intro-overlay">
     <div class="intro-content">
-      <p class="intro-text">Esssa é pra você meu amor, leia com calma e aproveite as músicas, agora abra a cartinha que fiz pra ti!</p>
+      <p class="intro-text">Esssa é pra você meu amor, leia com calma e aproveite as músicas em cada página, agora abra
+        a cartinha que fiz pra ti!</p>
       <div class="intro-btn-container">
         <button id="intro-ok-btn" class="intro-heart-btn" aria-label="Confirmar e abrir">
           <svg viewBox="0 0 24 24">
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            <path
+              d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
           </svg>
           <span>OK</span>
         </button>
@@ -1453,6 +1462,18 @@
     const audio = document.getElementById('bg-music');
     const musicBtn = document.getElementById('music-toggle');
     let isMusicPlaying = false;
+    let currentSongIndex = -1;
+
+    const slideSongs = [
+      "audio/Muse - Uprising [Official Video].mp3",
+      "audio/Creed - My Sacrifice (Official HD Music Video).mp3",
+      "audio/Evanescence - Bring Me To Life (Official HD Music Video) ft. Paul McCoy.mp3",
+      "audio/Nirvana - Smells Like Teen Spirit (Official Music Video).mp3",
+      "audio/Numb (Official Music Video) [4K UPGRADE] – Linkin Park.mp3",
+      "audio/Guns N Roses - November Rain (Lyrics).mp3",
+      "audio/Hoobastank - The Reason (Lyrics).mp3",
+      "audio/Abracadabra - Lady Gaga - Ao vivo em Copacabana RJ 4k.mp3"
+    ];
 
     function playMusic() {
       audio.play().then(() => {
@@ -1461,6 +1482,35 @@
         musicBtn.classList.add('playing');
       }).catch(err => {
         console.log("Erro de autoplay bloqueado pelo navegador.");
+      });
+    }
+
+    function playSongForSlide(index) {
+      if (index < 0 || index >= slideSongs.length) return;
+      
+      const targetSrc = slideSongs[index];
+      
+      if (currentSongIndex === index) {
+        if (isMusicPlaying && audio.paused) {
+          audio.play().catch(e => console.log(e));
+        }
+        return;
+      }
+
+      currentSongIndex = index;
+      
+      audio.pause();
+      audio.src = targetSrc;
+      audio.load();
+      
+      isMusicPlaying = true;
+      musicBtn.classList.add('visible');
+      musicBtn.classList.add('playing');
+      
+      audio.play().then(() => {
+        console.log("Tocando slide " + (index + 1) + ": " + targetSrc);
+      }).catch(err => {
+        console.log("Erro ao reproduzir música do slide:", err);
       });
     }
 
@@ -1474,6 +1524,13 @@
         audio.play().then(() => {
           musicBtn.classList.add('playing');
           isMusicPlaying = true;
+        }).catch(err => {
+          // Se falhar (por exemplo, src vazio), tenta tocar a música correspondente
+          if (currentSongIndex >= 0) {
+            playSongForSlide(currentSongIndex);
+          } else {
+            playMusic();
+          }
         });
       }
     });
@@ -1499,6 +1556,7 @@
 
       setTimeout(() => {
         letter.classList.add('emerge');
+        playSongForSlide(0);
       }, 700);
 
       setTimeout(() => {
@@ -1577,6 +1635,11 @@
       // Atualiza a posição em pixels para o próximo início de arrasto
       prevTranslate = -currentIndex * slider.offsetWidth;
       currentTranslate = prevTranslate;
+
+      // Altera a música correspondente à página/slide atual se estiver no modo leitura
+      if (document.body.classList.contains('reading-mode')) {
+        playSongForSlide(index);
+      }
     }
 
     function updatePageInfo() {
@@ -1745,7 +1808,7 @@
     function initIntroBanner() {
       const introOverlay = document.getElementById('intro-overlay');
       const introOkBtn = document.getElementById('intro-ok-btn');
-      
+
       // Timer oculto de 5 segundos para exibir o botão OK em formato de coração
       setTimeout(() => {
         if (introOkBtn) {
